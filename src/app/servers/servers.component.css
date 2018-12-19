@@ -1,0 +1,20 @@
+table {
+    position: relative;
+    width: 80%;
+    left: 10%;
+  }
+
+.title
+{
+    position: relative;
+    /* color: darkgreen; */
+    font-size: 2em;
+    text-align: center;
+}
+.middle
+{
+    text-align: center; 
+}
+.example-spacer {
+    flex: 1 1 auto;
+  }

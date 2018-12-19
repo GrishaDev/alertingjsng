@@ -1,0 +1,24 @@
+<h1 mat-dialog-title class="middle">Change setting value</h1>
+<div mat-dialog-content class="middle">
+  type now
+  <!-- <ul>
+    <li>
+      <span *ngIf="data.newmails === 'da'">&#10003;</span> banana
+    </li>
+    <li>
+      <span *ngIf="data.newmails === '324'">&#10003;</span> da
+    </li>
+    <li>
+      <span *ngIf="data.newmails === 'da'">&#10003;</span> harta
+    </li>
+  </ul> -->
+  <mat-form-field class="field">
+        <input matInput [(ngModel)]="data.mails">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="bot">
+    <!-- <button mat-button (click)="onNoClick()">nvm</button> -->
+    <button mat-button mat-dialog-close>nvm</button>
+    <span class="example-spacer"></span>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

@@ -1,0 +1,20 @@
+.middle
+{
+    text-align: center; 
+}
+.example-spacer {
+    flex: 1 0 auto;
+  }
+
+.bot
+{
+    position: relative;
+    margin-bottom: 0;
+    bottom: 0;
+}
+
+.field
+{
+    height: 100%;
+    width: 100%;
+}
