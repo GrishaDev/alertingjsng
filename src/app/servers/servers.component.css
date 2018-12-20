@@ -1,4 +1,10 @@
 table {
+    /* position: relative; */
+    width: 100%;
+    /* left: 10%; */
+  }
+
+  .centered {
     position: relative;
     width: 80%;
     left: 10%;

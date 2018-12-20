@@ -1,5 +1,5 @@
-import { Component, OnInit,Inject } from '@angular/core';
-import {MatDialog,MAT_DIALOG_DATA,MatDialogRef} from '@angular/material';
+import { Component, OnInit,Inject,ViewChild } from '@angular/core';
+import {MatDialog,MAT_DIALOG_DATA,MatDialogRef,MatPaginator,MatTableDataSource} from '@angular/material';
 import { ServerdialogComponent } from '../serverdialog/serverdialog.component';
 
 export interface DialogData {
@@ -30,14 +30,21 @@ let SERVER_DATA: Server[] = [
 export class ServersComponent implements OnInit {
 
   displayedColumns: string[] = ['server', 'cpu','ram','overloaded','mail'];
-  dataSource = SERVER_DATA;
+ // dataSource = SERVER_DATA;
+ dataSource = new MatTableDataSource<Server>(SERVER_DATA);
+ 
 
-  mails:string;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  ngOnInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
+ // mails:string;
 
   constructor(public dialog: MatDialog) { }
 
-  ngOnInit() {
-  }
+ 
 
   openDialog(server,mails,index): void {
     const dialogRef = this.dialog.open(ServerdialogComponent, {

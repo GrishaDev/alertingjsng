@@ -1,0 +1,56 @@
+<mat-menu #appMenu="matMenu">
+    <button mat-menu-item (click)="toggleTheme();appMenu.close()"> Dark theme </button>
+    <button mat-menu-item> Help </button>
+    <button mat-menu-item (click)="changeStatus();appMenu.close()"> change status </button>
+    <button mat-menu-item (click)="logout();appMenu.close()"> Logout </button>
+  </mat-menu>
+  
+  
+  
+  <mat-sidenav-container class="example-container" >
+    <mat-toolbar color="primary">
+      <button mat-button (click)="sidenav.open()" ><mat-icon>menu</mat-icon></button>
+      <span>Manage</span>  
+      <span class="example-spacer"></span>
+      <button mat-button [matMenuTriggerFor]="appMenu"><mat-icon>settings</mat-icon></button>
+    </mat-toolbar>
+  
+    <mat-sidenav #sidenav class="example-sidenav">
+      <mat-list class="list-nav">
+          <!-- <p class="list-item">Hello </p> -->
+          <mat-divider></mat-divider>
+          <mat-list-item class="list-item" *ngFor="let source of options" (click)="navPress(source);sidenav.close();">
+            
+            <!-- <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ source.id +'.png)'}" class="example-header-image"></div> -->
+            <mat-icon>settings</mat-icon>
+            <!-- <mat-divider></mat-divider> -->
+            <span class="source-name"> {{source}}</span>
+            
+          </mat-list-item>
+      </mat-list>
+    </mat-sidenav>
+  
+    <!-- <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ 'abc-news' +'.png)'}" class="example-header-image"></div>
+          <mat-card-title class="title">hssafdad</mat-card-title>
+          <mat-card-subtitle>dsfdsfsdfsdf</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image class="img-article" src="https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.foodmatters.com%2Fmedia%2Fimages%2Fassets%2Fmarket-halva.jpg" alt="">
+        <mat-card-content>
+          <p>
+            sdfsdfsdfdsfdsfdsfdsfsdfdsfdsf
+          </p>
+        </mat-card-content>
+        <mat-card-actions class="action-buttons">
+          <button mat-button color="primary"><mat-icon>thumb_up_alt</mat-icon> 3254 Likes</button>
+          <button mat-button color="primary"><mat-icon>comment</mat-icon>  43534 Comments</button>
+          <button mat-button color="primary"><mat-icon>share</mat-icon>  435 Share</button>
+          <a mat-button color="primary"><mat-icon>visibility</mat-icon> More</a>
+        </mat-card-actions>
+      </mat-card> -->
+      <p class="title" [style.color]="statuscolor"> service is {{ statustr }} </p>
+      <app-settings *ngIf="content==0"></app-settings>
+      <app-servers *ngIf="content==1"></app-servers>
+  
+  </mat-sidenav-container>

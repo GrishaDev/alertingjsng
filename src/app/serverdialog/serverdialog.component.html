@@ -1,6 +1,6 @@
 <h1 mat-dialog-title class="middle">Change mail recievers for {{data.server}}</h1>
 <div mat-dialog-content class="middle">
-  Include ' , ' between mails to make a list
+  
   <!-- <ul>
     <li>
       <span *ngIf="data.newmails === 'da'">&#10003;</span> banana
@@ -13,7 +13,9 @@
     </li>
   </ul> -->
   <mat-form-field class="field">
-        <input matInput [(ngModel)]="data.mails">
+        <!-- <input matInput [(ngModel)]="data.mails"> -->
+        <textarea matInput placeholder="Type:" [(ngModel)]="data.mails">{{data.mails}}</textarea>
+        <mat-hint align="start"><strong>Include ' , ' between mails to make a list</strong> </mat-hint>
   </mat-form-field>
 </div>
 <div mat-dialog-actions class="bot">

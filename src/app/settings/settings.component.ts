@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialog,MAT_DIALOG_DATA,MatDialogRef} from '@angular/material';
+import { Component, OnInit,ViewChild } from '@angular/core';
+import {MatDialog,MAT_DIALOG_DATA,MatDialogRef,MatPaginator,MatTableDataSource} from '@angular/material';
 import { SettingdialogComponent } from '../settingdialog/settingdialog.component';
 
 export interface PeriodicElement {
@@ -43,17 +43,22 @@ export class SettingsComponent implements OnInit {
  // displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   displayedColumns: string[] = ['name', 'value'];
  // dataSource = ELEMENT_DATA;
-  dataSource = SETTING_DATA;
+ dataSource = new MatTableDataSource<Setting>(SETTING_DATA);
+ 
+
+ @ViewChild(MatPaginator) paginator: MatPaginator;
+
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
-  openDialog(mails,index): void {
+  openDialog(setting,value,index): void {
     const dialogRef = this.dialog.open(SettingdialogComponent, {
       width: '450px',
       height: '270px',
-      data: {mails: mails,index:index}
+      data: {setting: setting,value:value,index:index}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -61,7 +66,7 @@ export class SettingsComponent implements OnInit {
       console.log(result);
        //this.newmails = result;
       if(result)
-      SETTING_DATA[result.index].value = result.mails;
+      SETTING_DATA[result.index].value = result.value;
       //  console.log(result);
       //  console.log(this.newmails);
     });
