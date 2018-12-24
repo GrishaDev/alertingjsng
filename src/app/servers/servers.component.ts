@@ -43,12 +43,15 @@ let SERVER_DATA: Server[] = [
 })
 export class ServersComponent implements OnInit {
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  constructor(public dialog: MatDialog,private serversapi:ServersService) { }
+
   displayedColumns: string[] = ['server', 'cpu','ram','overloaded','mail'];
  // dataSource = SERVER_DATA;
  dataSource = new MatTableDataSource<Server>(SERVER_DATA);
 
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+
 
   ngOnInit() 
   {
@@ -58,24 +61,16 @@ export class ServersComponent implements OnInit {
 
  // mails:string;
 
-  constructor(public dialog: MatDialog,private serversapi:ServersService) { }
-
 
   updateTable()
   {
     this.serversapi.getServers().subscribe((data:any) =>
       {
-        for(let i=0; i<data.length;i++)
-        {
-          console.log(data);
-          let index = data[i].id
-          console.log(index);
-          SERVER_DATA[i].server = data[index].server;
-          SERVER_DATA[i].cpu = data[index].cpu;
-          SERVER_DATA[i].ram = data[index].ram;
-          SERVER_DATA[i].overloaded = data[index].overloaded;
-          SERVER_DATA[i].mail = data[index].mail;
-        }
+        SERVER_DATA = data;
+        this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
+        this.dataSource.paginator = this.paginator;
+        console.log("aaaaaaaaaaaaaaaa");
+        console.log(SERVER_DATA);
       });
   }
   

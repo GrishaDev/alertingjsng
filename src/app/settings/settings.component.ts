@@ -67,22 +67,11 @@ export class SettingsComponent implements OnInit {
   {
     this.settingsapi.getSettings().subscribe((data:any) =>
       {
-        // for(let i=0; i<data.length;i++)
-        // {
-        //   console.log(data);
-        //   let index = data[i].id
-        //   console.log(index);
-        //   SETTING_DATA[i].value = data[index].value;
-        // }
-        //SETTING_DATA[2].value = "test";
-        SETTING_DATA = [];
-        SETTING_DATA.push({id:0,name: 'ip', value: "34.324324.324324.324:3245"});
-        SETTING_DATA[0].value = "da";
-        //SETTING_DATA = data;
-       // this.cRef.detectChanges();
-        console.log(SETTING_DATA);
-        
 
+        SETTING_DATA = data;
+        this.dataSource = new MatTableDataSource<Setting>(SETTING_DATA);
+        this.dataSource.paginator = this.paginator;
+        console.log(SETTING_DATA);
       });
   }
 
