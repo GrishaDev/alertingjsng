@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { SettingsService } from './settings.service';
+import { ServersService } from './servers/servers.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule,MatTableModule,MatDialogModule,MatFormFieldModule,
 MatInputModule,MatPaginatorModule,MatOptionModule,MatSelectModule} from '@angular/material';
@@ -58,7 +59,7 @@ const appRoutes: Routes =
     ServerdialogComponent,
     SettingdialogComponent
   ],
-  providers: [SettingsService],
+  providers: [SettingsService,ServersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

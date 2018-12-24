@@ -1,6 +1,8 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import {MatDialog,MAT_DIALOG_DATA,MatDialogRef,MatPaginator,MatTableDataSource} from '@angular/material';
 import { SettingdialogComponent } from '../settingdialog/settingdialog.component';
+import { SettingsService } from '../settings.service';
+//import { ChangeDetectorRef } from '@angular/core';
 
 export interface PeriodicElement {
   name: string;
@@ -10,6 +12,7 @@ export interface PeriodicElement {
 }
 
 export interface Setting {
+  id: number,
   name: string;
   value: string;
 }
@@ -27,10 +30,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
 ];
 
-const SETTING_DATA: Setting[] = [
-  {name: 'ip', value: "34.324324.324324.324:3245"},
-  {name: 'peak', value: "90%"},
-  {name: 'logs', value: "/var/log/da.log"},
+let SETTING_DATA: Setting[] = [
+  {id:0,name: 'ip', value: "34.324324.324324.324:3245"},
+  {id:1,name: 'peak', value: "90%"},
+  {id:2,name: 'logs', value: "/var/log/da.log"},
 ];
 
 @Component({
@@ -44,15 +47,45 @@ export class SettingsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'value'];
  // dataSource = ELEMENT_DATA;
  dataSource = new MatTableDataSource<Setting>(SETTING_DATA);
- 
+
+ settingdata:string;
 
  @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,private settingsapi:SettingsService) { }
 
-  ngOnInit() {
+  ngOnInit() 
+  {
+    console.log("settings component init");
     this.dataSource.paginator = this.paginator;
+    this.updateTable();
+    // console.log(this.settingdata);
+    // this.getdata();
   }
+
+  updateTable()
+  {
+    this.settingsapi.getSettings().subscribe((data:any) =>
+      {
+        // for(let i=0; i<data.length;i++)
+        // {
+        //   console.log(data);
+        //   let index = data[i].id
+        //   console.log(index);
+        //   SETTING_DATA[i].value = data[index].value;
+        // }
+        //SETTING_DATA[2].value = "test";
+        SETTING_DATA = [];
+        SETTING_DATA.push({id:0,name: 'ip', value: "34.324324.324324.324:3245"});
+        SETTING_DATA[0].value = "da";
+        //SETTING_DATA = data;
+       // this.cRef.detectChanges();
+        console.log(SETTING_DATA);
+        
+
+      });
+  }
+
 
   openDialog(setting,value,index): void {
     const dialogRef = this.dialog.open(SettingdialogComponent, {
@@ -66,10 +99,26 @@ export class SettingsComponent implements OnInit {
       console.log(result);
        //this.newmails = result;
       if(result)
-      SETTING_DATA[result.index].value = result.value;
-      //  console.log(result);
-      //  console.log(this.newmails);
+      {
+        SETTING_DATA[result.index].value = result.value;
+        this.updateSettings(SETTING_DATA);
+      }
     });
+  }
+
+  updateSettings(data)
+  {
+    this.settingsapi.postsettings(data).subscribe((res:any) =>
+      {
+         if(res.status)
+         {
+            console.log("succesful settings update!");
+         }
+         else
+         {
+            console.log("failed settings update.");
+         }
+      });
   }
 
 }

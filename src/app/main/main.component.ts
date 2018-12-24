@@ -26,15 +26,15 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.options = ['Settings','Servers'];     
         //load articles
-      this.newsapi.initArticles().subscribe(data => this.mArticles = data['articles']);
-    //load news sources
-    this.newsapi.initSources().subscribe(data=> this.mSources = data['sources']);  
+    //   this.newsapi.initArticles().subscribe(data => this.mArticles = data['articles']);
+    // //load news sources
+    // this.newsapi.initSources().subscribe(data=> this.mSources = data['sources']);  
     }
 
 
   searchArticles(source){
     console.log("selected source is: "+source);
-    this.newsapi.getArticlesByID(source).subscribe(data => this.mArticles = data['articles']);
+    // this.newsapi.getArticlesByID(source).subscribe(data => this.mArticles = data['articles']);
   }
 
   changeStatus()
