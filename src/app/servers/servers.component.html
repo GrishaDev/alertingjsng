@@ -32,7 +32,13 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons></mat-paginator>
+    <mat-toolbar class="pagtool">
+      <mat-toolbar-row>
+          <mat-icon (click)="updateTable()" title="refresh">refresh</mat-icon>
+          <span class="example-spacer"></span>
+        <mat-paginator [pageSizeOptions]="[10, 5, 3]" showFirstLastButtons></mat-paginator>
+      </mat-toolbar-row>
+    </mat-toolbar>
 </div>
   <!-- <p *ngIf="newmails">
       You chose: <i>{{newmails}}</i>

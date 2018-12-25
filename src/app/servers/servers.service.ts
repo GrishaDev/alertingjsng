@@ -15,8 +15,10 @@ export class ServersService
   }
   postservers(data)
   {
-    console.log(" i am getting .. ");
-    console.log(data);
     return this.http.post('http://localhost:3000/api/postservers',data);
+  }
+  postsmails(data)
+  {
+    return this.http.post('http://localhost:3000/api/postmails',data);
   }
 }

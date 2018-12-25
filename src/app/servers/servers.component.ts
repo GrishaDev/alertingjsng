@@ -67,6 +67,9 @@ export class ServersComponent implements OnInit {
     this.serversapi.getServers().subscribe((data:any) =>
       {
         SERVER_DATA = data;
+        SERVER_DATA.sort(function(a, b) {
+          return a.id - b.id;
+        });
         this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
         this.dataSource.paginator = this.paginator;
         console.log("aaaaaaaaaaaaaaaa");
@@ -76,19 +79,30 @@ export class ServersComponent implements OnInit {
   
   updateServers(data)
   {
-    this.serversapi.postservers(data).subscribe((res:any) =>
+    let finaldata = this.parsemaildata(data);
+    this.serversapi.postsmails(finaldata).subscribe((res:any) =>
       {
          if(res.status)
          {
-            console.log("succesful settings update!");
+            console.log("succesful servers update!");
          }
          else
          {
-            console.log("failed settings update.");
+            console.log("failed servers update.");
          }
       });
   }
 
+  parsemaildata(data)
+  {
+    let maildata = [];
+
+    for(let i=0; i<data.length;i++)
+    {
+      maildata.push({server:data[i].server,mail:data[i].mail})
+    }
+    return maildata;
+  }
   openDialog(server,mails,index): void {
     const dialogRef = this.dialog.open(ServerdialogComponent, {
       width: '450px',

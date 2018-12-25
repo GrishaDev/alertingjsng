@@ -69,11 +69,16 @@ export class SettingsComponent implements OnInit {
       {
 
         SETTING_DATA = data;
+        SETTING_DATA.sort(function(a, b) {
+          return a.id - b.id;
+        });
         this.dataSource = new MatTableDataSource<Setting>(SETTING_DATA);
         this.dataSource.paginator = this.paginator;
         console.log(SETTING_DATA);
       });
   }
+
+
 
 
   openDialog(setting,value,index): void {
