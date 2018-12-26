@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,HostBinding } from '@angular/core';
 import { SettingsService } from '../settings.service';
 import {Router} from '@angular/router';
+import { OverlayContainer} from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-main',
@@ -18,10 +19,14 @@ export class MainComponent implements OnInit {
   status:boolean = true;
   content:number = 0;
 
-  constructor(private newsapi:SettingsService,private router: Router){
+  darktheme:boolean = false;
+
+  constructor(private newsapi:SettingsService,private router: Router, public overlayContainer: OverlayContainer){
     console.log('app component constructor called');
    
   }
+
+  @HostBinding('class') componentCssClass;
 
   ngOnInit() {
     this.options = ['Settings','Servers'];     
@@ -65,6 +70,25 @@ export class MainComponent implements OnInit {
     }
   }
 
+  toggleTheme()
+  {
+    let theme = 'dark-theme';
+    let theme2 = 'light-theme';
+    let theme3 = 'default-theme';
+
+    this.darktheme = !this.darktheme;
+
+    if(this.darktheme === true)
+    {
+      this.overlayContainer.getContainerElement().classList.add(theme);
+      this.componentCssClass = theme;
+    }
+    else
+    {
+      this.overlayContainer.getContainerElement().classList.add(theme3);
+      this.componentCssClass = theme3;
+    }
+  }
   logout()
   {
     this.router.navigate([""]);

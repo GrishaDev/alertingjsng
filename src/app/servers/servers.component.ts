@@ -106,7 +106,6 @@ export class ServersComponent implements OnInit {
   openDialog(server,mails,index): void {
     const dialogRef = this.dialog.open(ServerdialogComponent, {
       width: '450px',
-      height: '250px',
       data: {server:server,mails: mails,index:index}
     });
 

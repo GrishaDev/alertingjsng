@@ -18,6 +18,8 @@ import { SettingdialogComponent } from './settingdialog/settingdialog.component'
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 
+import { OverlayModule} from '@angular/cdk/overlay';
+
 const appRoutes: Routes =
 [
   {path: '',component:LoginComponent},
@@ -53,6 +55,7 @@ const appRoutes: Routes =
     MatPaginatorModule,
     MatOptionModule,
     MatSelectModule,
+    OverlayModule,
     RouterModule.forRoot(appRoutes)
   ],
   entryComponents: [

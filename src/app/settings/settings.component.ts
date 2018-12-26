@@ -84,7 +84,6 @@ export class SettingsComponent implements OnInit {
   openDialog(setting,value,index): void {
     const dialogRef = this.dialog.open(SettingdialogComponent, {
       width: '450px',
-      height: '270px',
       data: {setting: setting,value:value,index:index}
     });
 
