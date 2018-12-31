@@ -79,8 +79,8 @@ export class ServersComponent implements OnInit {
   
   updateServers(data)
   {
-    let finaldata = this.parsemaildata(data);
-    this.serversapi.postsmails(finaldata).subscribe((res:any) =>
+    //let finaldata = this.parsemaildata(data);
+    this.serversapi.postsmails(data).subscribe((res:any) =>
       {
          if(res.status)
          {
@@ -116,7 +116,7 @@ export class ServersComponent implements OnInit {
       if(result)
       {
         SERVER_DATA[result.index].mail = result.mails;
-        this.updateServers(SERVER_DATA);
+        this.updateServers({server:SERVER_DATA[result.index].server,mail:SERVER_DATA[result.index].mail});
 
       }
       //  console.log(result);
