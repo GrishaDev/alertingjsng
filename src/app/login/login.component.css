@@ -2,12 +2,50 @@
 {
      position: absolute;
 } */
-.example-card {
+/* .example-card {
     position: absolute;
     left: 45%;
     top: 35%;
+  } */
+
+  .mycontainer {
+    position: absolute;
+    background-color: white;
+    width: 50%;
+    height: 35%;
+    left: 25%;
+    top: 25%;
+    min-height: 300px;
+    box-shadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12)
   }
   
+  .myform
+  {
+    /* display:block;
+    position: absolute;
+    left: 25%;
+    text-align: center; */
+    width: 50%;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .field
+  {
+    width: 100%;
+    margin-top: 5%;
+  }
+  
+  .btn
+  {
+    position: relative;
+    bottom: 0;
+    display: block;
+    margin: 0 auto;
+    width: 25%;
+    height: 15%;
+  }
   .example-header-image {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;

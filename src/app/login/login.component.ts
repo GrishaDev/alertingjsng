@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material'
 import { HttpClient  } from '@angular/common/http';
+import { NgForm } from '@angular/forms'
 
 @Component({
   selector: 'app-login',
@@ -10,10 +11,14 @@ import { HttpClient  } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit 
 {
+  @ViewChild('f') form:NgForm;
   constructor(private router: Router,private http:HttpClient) { }
   username: string;
   password: string;
+  valid:boolean = false;
+
     ngOnInit() {
+      console.log(this.valid)
     }
     login() : void 
     {
