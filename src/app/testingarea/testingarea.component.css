@@ -1,0 +1,17 @@
+/* div
+{
+    right: 50%;
+} */
+
+table
+{
+    position: absolute;
+    right: 50%;
+}
+
+.da
+{
+    position: absolute;
+    width: 50%;
+    left: 25%;
+}

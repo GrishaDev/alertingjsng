@@ -1,7 +1,8 @@
 
-<p class="title" > Settings list: </p>
 
-<div class="mat-elevation-z8 centered">
+<p class="title"  *ngIf="animation" [@slideInOut]> Settings list: </p>
+<div class="mat-elevation-z8 centered" *ngIf="animation" [@slideInOut]>
+
 <table mat-table [dataSource]="dataSource">
 
     <!--- Note that these columns can be defined in any order.

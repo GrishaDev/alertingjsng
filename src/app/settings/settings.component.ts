@@ -2,6 +2,8 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import {MatDialog,MAT_DIALOG_DATA,MatDialogRef,MatPaginator,MatTableDataSource} from '@angular/material';
 import { SettingdialogComponent } from '../settingdialog/settingdialog.component';
 import { SettingsService } from '../settings.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
+
 //import { ChangeDetectorRef } from '@angular/core';
 
 export interface PeriodicElement {
@@ -39,7 +41,18 @@ let SETTING_DATA: Setting[] = [
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+  styleUrls: ['./settings.component.css'],
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({transform: 'translateX(-100%)'}),
+        animate('500ms ease-in', style({transform: 'translateX(0%)'}))
+      ]),
+      transition(':leave', [
+      animate('500ms ease-in', style({transform: 'translateX(0%)'}))
+      ])
+    ])
+  ]
 })
 export class SettingsComponent implements OnInit {
 
@@ -50,6 +63,8 @@ export class SettingsComponent implements OnInit {
 
  settingdata:string;
 
+ animation = false;
+
  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(public dialog: MatDialog,private settingsapi:SettingsService) { }
@@ -57,6 +72,7 @@ export class SettingsComponent implements OnInit {
   ngOnInit() 
   {
     console.log("settings component init");
+    this.animation = true;
     this.dataSource.paginator = this.paginator;
     this.updateTable();
     // console.log(this.settingdata);

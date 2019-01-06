@@ -1,6 +1,6 @@
-<p class="title" > Servers list: </p>
+<p class="title" *ngIf="animation" [@slideInOut]> Servers list: </p>
 
-<div class="mat-elevation-z8 centered">
+<div class="mat-elevation-z8 centered" *ngIf="animation" [@slideInOut]>
   <table mat-table [dataSource]="dataSource">
       
       <ng-container matColumnDef="server">

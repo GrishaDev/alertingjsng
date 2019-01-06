@@ -2,6 +2,7 @@ import { Component, OnInit,Inject,ViewChild } from '@angular/core';
 import {MatDialog,MAT_DIALOG_DATA,MatDialogRef,MatPaginator,MatTableDataSource} from '@angular/material';
 import { ServerdialogComponent } from '../serverdialog/serverdialog.component';
 import { ServersService } from './servers.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 export interface DialogData {
   mails: string;
@@ -39,7 +40,18 @@ let SERVER_DATA: Server[] = [
 @Component({
   selector: 'app-servers',
   templateUrl: './servers.component.html',
-  styleUrls: ['./servers.component.css']
+  styleUrls: ['./servers.component.css'],
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({transform: 'translateX(-100%)'}),
+        animate('500ms ease-in', style({transform: 'translateX(0%)'}))
+      ]),
+      transition(':leave', [
+      animate('500ms ease-in', style({transform: 'translateX(0%)'}))
+      ])
+    ])
+  ]
 })
 export class ServersComponent implements OnInit {
 
@@ -52,9 +64,10 @@ export class ServersComponent implements OnInit {
 
 
 
-
+ animation = false;
   ngOnInit() 
   {
+    this.animation = true;
     this.dataSource.paginator = this.paginator;
     this.updateTable();
   }

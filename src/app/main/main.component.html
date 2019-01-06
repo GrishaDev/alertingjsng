@@ -16,15 +16,16 @@
   
     <mat-sidenav #sidenav class="example-sidenav">
       <mat-list class="list-nav">
-          <mat-divider style="padding-top: 30%"></mat-divider>
-          <mat-list-item class="list-item" *ngFor="let source of options" (click)="navPress(source);sidenav.close();">
-            <mat-icon>settings</mat-icon>
-            <span class="source-name"> {{source}}</span>
+          <img src="../../assets/images/alertpng.png" class="avatar">
+          <mat-divider style="padding-top: 10%"></mat-divider>
+          <mat-list-item class="list-item" *ngFor="let source of options" (click)="navPress(source[0]);sidenav.close();">
+            <mat-icon>{{source[1]}}</mat-icon>
+            <span class="source-name"> {{source[0]}}</span>
           </mat-list-item>
       </mat-list>
     </mat-sidenav>
       <p class="title" [style.color]="statuscolor"> service is {{ statustr }} </p>
       <app-settings *ngIf="content==0"></app-settings>
       <app-servers *ngIf="content==1"></app-servers>
-  
+      <app-testingarea *ngIf="content==2"></app-testingarea>
   </mat-sidenav-container>

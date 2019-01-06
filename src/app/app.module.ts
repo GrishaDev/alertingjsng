@@ -19,6 +19,7 @@ import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 
 import { OverlayModule} from '@angular/cdk/overlay';
+import { TestingareaComponent } from './testingarea/testingarea.component';
 
 const appRoutes: Routes =
 [
@@ -34,7 +35,8 @@ const appRoutes: Routes =
     ServerdialogComponent,
     SettingdialogComponent,
     LoginComponent,
-    MainComponent
+    MainComponent,
+    TestingareaComponent
   ],
   imports: [
     FormsModule,

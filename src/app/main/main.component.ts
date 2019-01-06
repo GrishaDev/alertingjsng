@@ -28,13 +28,10 @@ export class MainComponent implements OnInit {
 
   @HostBinding('class') componentCssClass;
 
-  ngOnInit() {
-    this.options = ['Settings','Servers'];     
-        //load articles
-    //   this.newsapi.initArticles().subscribe(data => this.mArticles = data['articles']);
-    // //load news sources
-    // this.newsapi.initSources().subscribe(data=> this.mSources = data['sources']);  
-    }
+  ngOnInit() 
+  {
+    this.options = [['Settings','settings'],['Servers','important_devices'],['Testing area','brush']];     
+  }
 
 
   searchArticles(source){
@@ -67,6 +64,10 @@ export class MainComponent implements OnInit {
     else if(option == "Servers")
     {
       this.content = 1;
+    }
+    else if(option == "Testing area")
+    {
+      this.content = 2;
     }
   }
 
