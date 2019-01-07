@@ -94,4 +94,9 @@ export class MainComponent implements OnInit {
   {
     this.router.navigate([""]);
   }
+
+  help()
+  {
+    alert("It's all so simple")
+  }
 }

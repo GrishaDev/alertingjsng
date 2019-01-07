@@ -14,4 +14,30 @@ table
     position: absolute;
     width: 50%;
     left: 25%;
+    text-align: center;
+}
+
+.example-margin {
+    margin: 0 10px;
+  }
+
+.mid
+{
+    /* position: fixed;
+    left: 25%;
+    top: 50%;
+    background-color: red;
+    width: 25%;
+    height: 25%; */
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 2em;
+    overflow: visible;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    /* transform: translate(-50%,-50%); */
 }

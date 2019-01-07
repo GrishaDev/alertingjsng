@@ -1,6 +1,7 @@
 .middle
 {
     text-align: center; 
+    /* background-color: lightblue; */
 }
 .example-spacer {
     flex: 1 0 auto;
@@ -10,7 +11,11 @@
 {
     position: relative;
     margin-bottom: 0;
+    top: 1em;
+    padding: 0;
+    margin: 0;
     bottom: 0;
+    /* background-color: red; */
 }
 
 .field

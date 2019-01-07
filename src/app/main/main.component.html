@@ -1,8 +1,8 @@
 <mat-menu #appMenu="matMenu">
-    <button mat-menu-item (click)="toggleTheme();appMenu.close()"> Dark theme </button>
-    <button mat-menu-item> Help </button>
-    <button mat-menu-item (click)="changeStatus();appMenu.close()"> change status </button>
-    <button mat-menu-item (click)="logout();appMenu.close()"> Logout </button>
+    <button mat-menu-item (click)="toggleTheme()"> Dark theme </button>
+    <button mat-menu-item (click)="help()"> Help </button>
+    <button mat-menu-item (click)="changeStatus()"> change status </button>
+    <button mat-menu-item (click)="logout()"> Logout </button>
   </mat-menu>
   
   
@@ -24,7 +24,7 @@
           </mat-list-item>
       </mat-list>
     </mat-sidenav>
-      <p class="title" [style.color]="statuscolor"> service is {{ statustr }} </p>
+      <p class="title" color="primary"> service is {{ statustr }} </p>
       <app-settings *ngIf="content==0"></app-settings>
       <app-servers *ngIf="content==1"></app-servers>
       <app-testingarea *ngIf="content==2"></app-testingarea>

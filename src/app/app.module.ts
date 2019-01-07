@@ -5,7 +5,7 @@ import { SettingsService } from './settings.service';
 import { ServersService } from './servers/servers.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule,MatTableModule,MatDialogModule,MatFormFieldModule,
-MatInputModule,MatPaginatorModule,MatOptionModule,MatSelectModule} from '@angular/material';
+MatInputModule,MatPaginatorModule,MatOptionModule,MatSelectModule,MatProgressSpinnerModule} from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import {Routes,RouterModule, Router} from '@angular/router'
 
@@ -57,6 +57,7 @@ const appRoutes: Routes =
     MatPaginatorModule,
     MatOptionModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
     OverlayModule,
     RouterModule.forRoot(appRoutes)
   ],

@@ -3,11 +3,23 @@ import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material'
 import { HttpClient  } from '@angular/common/http';
 import { NgForm } from '@angular/forms'
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({transform: 'translateY(-5000%)'}),
+        animate('300ms ease-in', style({transform: 'translateY(0%)'}))
+      ]),
+      transition(':leave', [
+      animate('300ms ease-in', style({transform: 'translateY(0%)'}))
+      ])
+    ])
+  ]
 })
 export class LoginComponent implements OnInit 
 {
@@ -16,6 +28,7 @@ export class LoginComponent implements OnInit
   username: string;
   password: string;
   valid:boolean = false;
+  err:string;
 
     ngOnInit() {
       console.log(this.valid)
@@ -47,7 +60,8 @@ export class LoginComponent implements OnInit
           }
           else
           {
-            alert("Invalid credentials");
+            //alert("Invalid credentials");
+            it.err = "Invalid credentials";
           }
         },
         err => {
@@ -55,5 +69,10 @@ export class LoginComponent implements OnInit
           alert("Error connecting.");
         }
       );
+    }
+
+    inputChanged($event)
+    {
+      this.err="";
     }
 }

@@ -67,7 +67,7 @@
   </mat-card>
 </div> -->
 
-<div class="mycontainer">
+<!-- <div class="mycontainer">
   <form class="myform">
       <table class="field" cellspacing="0">
         <tr>
@@ -83,5 +83,27 @@
         </mat-form-field></td>
       </tr></table>
       <button mat-raised-button (click)="login()" color="primary" class="btn">Login</button>
+      <p>Message</p>
     </form>
-</div>
+</div> -->
+
+<div class="loginbox">
+    <form class="myform" #f="ngForm">
+        <table class="field" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field class="field">
+              <input matInput placeholder="Username" id="user" class="field" [(ngModel)]="username" name="username" (input)="inputChanged($event)" required>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+          <td><mat-form-field class="field">
+            <input matInput placeholder="Password" id="pass" class="field" [(ngModel)]="password" type="password" name="password" (input)="inputChanged($event)" required>
+          </mat-form-field></td>
+        </tr></table>
+        <button mat-raised-button (click)="login()" color="primary" class="btn" [disabled]="!f.valid">Login</button>
+        <p class="err" *ngIf="err">{{err}}</p>
+        <!-- [@slideInOut]="err" -->
+      </form>
+  </div>

@@ -25,10 +25,10 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     trigger('slideInOut', [
       transition(':enter', [
         style({transform: 'translateX(-100%)'}),
-        animate('200ms ease-in', style({transform: 'translateX(50%)'}))
+        animate('200ms ease-in', style({transform: 'translateX(0%)'}))
       ]),
       transition(':leave', [
-      animate('200ms ease-in', style({transform: 'translateX(50%)'}))
+      animate('200ms ease-in', style({transform: 'translateX(0%)'}))
       ])
     ])
   ]
@@ -44,6 +44,10 @@ export class TestingareaComponent implements OnInit {
 
   visible = false;
   currentState = 'initial';
+
+  color = 'primary';
+  mode = 'determinate';
+  value = 50;
 
   ngOnInit() 
   {

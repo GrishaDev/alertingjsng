@@ -25,14 +25,14 @@
 
       <ng-container matColumnDef="mail">
         <th mat-header-cell *matHeaderCellDef> Mail receivers </th>
-        <td mat-cell *matCellDef="let server; let i=index" (click)="openDialog(server.server,server.mail,i)"> {{server.mail}} </td>
+        <td mat-cell *matCellDef="let server; let i=index" (click)="openDialog(server.server,server.mail,i)" class="mailtd"> {{server.mail}} </td>
       </ng-container>
 
     
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
     </table>
-    <mat-toolbar class="pagtool">
+    <mat-toolbar class="pagtool" color="accent">
       <mat-toolbar-row>
           <mat-icon (click)="updateTable()" title="refresh">refresh</mat-icon>
           <span class="example-spacer"></span>
@@ -40,6 +40,8 @@
       </mat-toolbar-row>
     </mat-toolbar>
 </div>
+
+<mat-spinner class="mid" color="warn" *ngIf="loading"></mat-spinner>
   <!-- <p *ngIf="newmails">
       You chose: <i>{{newmails}}</i>
   </p> -->

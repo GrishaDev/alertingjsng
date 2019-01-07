@@ -61,8 +61,9 @@ export class ServersComponent implements OnInit {
   displayedColumns: string[] = ['server', 'cpu','ram','overloaded','mail'];
  // dataSource = SERVER_DATA;
  dataSource = new MatTableDataSource<Server>(SERVER_DATA);
+  loading:boolean = false;
 
-
+  first:boolean = true;
 
  animation = false;
   ngOnInit() 
@@ -70,6 +71,7 @@ export class ServersComponent implements OnInit {
     this.animation = true;
     this.dataSource.paginator = this.paginator;
     this.updateTable();
+    this.first=false;
   }
 
  // mails:string;
@@ -77,6 +79,9 @@ export class ServersComponent implements OnInit {
 
   updateTable()
   {
+    if(!this.first)
+    this.loading = true;
+
     this.serversapi.getServers().subscribe((data:any) =>
       {
         SERVER_DATA = data;
@@ -85,11 +90,19 @@ export class ServersComponent implements OnInit {
         });
         this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
         this.dataSource.paginator = this.paginator;
-        console.log("aaaaaaaaaaaaaaaa");
+        console.log("got new server data");
+
+         setTimeout(function() { console.log("stop loading show"); this.loading=false;}.bind(this), 500);
+        //this.loading = false;
         console.log(SERVER_DATA);
       });
   }
   
+  // stopLoading()
+  // {
+  //   this.loading=false;
+  //   console.log(this.loading);
+  // }
   updateServers(data)
   {
     //let finaldata = this.parsemaildata(data);
