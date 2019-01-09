@@ -20,9 +20,13 @@
 
       <ng-container matColumnDef="overloaded">
         <th mat-header-cell *matHeaderCellDef> Overloaded? </th>
-        <td mat-cell *matCellDef="let server"> {{server.overloaded}} </td>
+          <td mat-cell *matCellDef="let server" [class.text-danger]="server.overloaded === 'true'" 
+          [class.text-correct]="server.overloaded === 'false'">
+          <mat-icon *ngIf="server.overloaded === 'false'">check</mat-icon>
+          <mat-icon *ngIf="server.overloaded === 'true'">priority_high</mat-icon>
+          {{server.overloaded}} </td>
       </ng-container>
-
+      <!-- [ngStyle]="{'color:':server.overloaded === 'true' ? 'red' : 'green' }" -->
       <ng-container matColumnDef="mail">
         <th mat-header-cell *matHeaderCellDef> Mail receivers </th>
         <td mat-cell *matCellDef="let server; let i=index" (click)="openDialog(server.server,server.mail,i)" class="mailtd"> {{server.mail}} </td>
@@ -40,6 +44,8 @@
       </mat-toolbar-row>
     </mat-toolbar>
 </div>
+
+<p class="text-danger middle" *ngIf="errormsg">{{errormsg}}</p>
 
 <mat-spinner class="mid" color="warn" *ngIf="loading"></mat-spinner>
   <!-- <p *ngIf="newmails">

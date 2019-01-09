@@ -1,7 +1,9 @@
 table {
-    /* position: relative; */
+    /* position: absolute; */
     width: 100%;
     /* left: 10%; */
+    /* max-height: 400px;
+    overflow-y: scroll; */
   }
 
   .centered {
@@ -43,9 +45,28 @@ table {
     right: 0;
 }
 
+.mailtd
+{
+    max-width: 15em;
+    white-space: normal;
+    word-break: break-all;
+}
+
 .mailtd:hover
 {
     cursor: pointer;
       background-color: #3f51b5;
       color: white;
+}
+
+.text-danger
+{
+    color:red;
+    font-weight: bold;
+}
+
+.text-correct
+{
+    color:green;
+    font-weight: bold;
 }

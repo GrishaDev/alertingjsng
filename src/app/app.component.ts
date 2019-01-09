@@ -7,7 +7,8 @@ import { SettingsService } from './settings.service';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
+export class AppComponent 
+{
   title= 'alertingjsng';
   statuscolor = 'darkgreen';
   statustr = 'running'
@@ -18,24 +19,15 @@ export class AppComponent {
   status:boolean = true;
   content:number = 0;
 
-  constructor(private newsapi:SettingsService){
+  constructor(private newsapi:SettingsService)
+  {
     console.log('app component constructor called');
-   
   }
 
-  ngOnInit() {
+  ngOnInit() 
+  {
     this.options = ['Settings','Servers'];     
-        //load articles
-    //   this.newsapi.initArticles().subscribe(data => this.mArticles = data['articles']);
-    // //load news sources
-    // this.newsapi.initSources().subscribe(data=> this.mSources = data['sources']);  
-    }
-
-
-  // searchArticles(source){
-  //   console.log("selected source is: "+source);
-  //   this.newsapi.getArticlesByID(source).subscribe(data => this.mArticles = data['articles']);
-  // }
+  }
 
   changeStatus()
   {
@@ -64,5 +56,4 @@ export class AppComponent {
       this.content = 1;
     }
   }
-  
 }

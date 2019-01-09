@@ -18,9 +18,27 @@ table {
     text-align: center;
 }
 
+.valuetd
+{
+    max-width: 15em;
+    white-space: normal;
+    word-break: break-all;
+}
+
 .valuetd:hover
 {
     cursor: pointer;
       background-color: #3f51b5;
       color: white;
+}
+
+.middle
+{
+    text-align: center; 
+}
+
+.text-danger
+{
+    color:red;
+    font-weight: bold;
 }

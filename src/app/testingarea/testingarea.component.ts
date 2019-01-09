@@ -40,6 +40,8 @@ export class TestingareaComponent implements OnInit {
     
   }
 
+  items = Array.from({length: 100}).map((_, i) => `Item #${i}`);
+
   test;
 
   visible = false;

@@ -20,7 +20,8 @@ export interface Server {
 
 
 let SERVER_DATA: Server[] = [
-  {id: 0,server: 'harta', cpu: "92%",ram:"52%",overloaded:"true",mail:"dada@gmail.com,pringles@hey.com"},
+  {id: 0,server: 'harta', cpu: "92%",ram:"52%",overloaded:"true",mail:"dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,"+
+  "dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com"},
   {id: 1,server: 'harta2', cpu: "22%",ram:"12%",overloaded:"false",mail:"pringles@hey.com"},
   {id: 2,server: 'harta3', cpu: "62%",ram:"42%",overloaded:"false",mail:"banan@outlook.com,jaja@bueno.nz"},
   {id: 3,server: 'harta324', cpu: "92%",ram:"52%",overloaded:"true",mail:"dada@gmail.com,pringles@hey.com"},
@@ -53,19 +54,22 @@ let SERVER_DATA: Server[] = [
     ])
   ]
 })
-export class ServersComponent implements OnInit {
+export class ServersComponent implements OnInit 
+{
+  displayedColumns: string[] = ['server', 'cpu','ram','overloaded','mail'];
+  dataSource = new MatTableDataSource<Server>(SERVER_DATA);
+  loading:boolean = false;
+
+  first:boolean = true;
+  yea:boolean = true;
+  peak:number = 90;
+  errormsg:string = "";
+
+  animation = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(public dialog: MatDialog,private serversapi:ServersService) { }
 
-  displayedColumns: string[] = ['server', 'cpu','ram','overloaded','mail'];
- // dataSource = SERVER_DATA;
- dataSource = new MatTableDataSource<Server>(SERVER_DATA);
-  loading:boolean = false;
-
-  first:boolean = true;
-
- animation = false;
   ngOnInit() 
   {
     this.animation = true;
@@ -74,49 +78,41 @@ export class ServersComponent implements OnInit {
     this.first=false;
   }
 
- // mails:string;
-
-
   updateTable()
   {
     if(!this.first)
     this.loading = true;
 
     this.serversapi.getServers().subscribe((data:any) =>
-      {
-        SERVER_DATA = data;
-        SERVER_DATA.sort(function(a, b) {
-          return a.id - b.id;
-        });
-        this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
-        this.dataSource.paginator = this.paginator;
-        console.log("got new server data");
-
-         setTimeout(function() { console.log("stop loading show"); this.loading=false;}.bind(this), 500);
-        //this.loading = false;
-        console.log(SERVER_DATA);
+    {
+      SERVER_DATA = data;
+      SERVER_DATA.sort(function(a, b) {
+        return a.id - b.id;
       });
+      this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
+      this.dataSource.paginator = this.paginator;
+      this.errormsg= "";
+      console.log("got new server data");
+      setTimeout(function() {this.loading=false;}.bind(this), 500);
+    },
+    (err) => {console.log("Error contacting settings service, server down? details: "+JSON.stringify(err));
+    this.errormsg="Error getting data from database, try again soon.";
+    this.loading=false;});
   }
   
-  // stopLoading()
-  // {
-  //   this.loading=false;
-  //   console.log(this.loading);
-  // }
   updateServers(data)
   {
-    //let finaldata = this.parsemaildata(data);
     this.serversapi.postsmails(data).subscribe((res:any) =>
-      {
-         if(res.status)
-         {
-            console.log("succesful servers update!");
-         }
-         else
-         {
-            console.log("failed servers update.");
-         }
-      });
+    {
+        if(res.status)
+        {
+          console.log("succesful servers update!");
+        }
+        else
+        {
+          console.log("failed servers update.");
+        }
+    });
   }
 
   parsemaildata(data)
@@ -129,39 +125,24 @@ export class ServersComponent implements OnInit {
     }
     return maildata;
   }
-  openDialog(server,mails,index): void {
-    const dialogRef = this.dialog.open(ServerdialogComponent, {
+
+  openDialog(server,mails,index): void 
+  {
+    const dialogRef = this.dialog.open(ServerdialogComponent, 
+    {
       width: '450px',
       data: {server:server,mails: mails,index:index}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      //console.log(`The dialog was closed ${result}`);
+    dialogRef.afterClosed().subscribe(result => 
+    {
       console.log(result);
-       //this.newmails = result;
       if(result)
       {
         SERVER_DATA[result.index].mail = result.mails;
         this.updateServers({server:SERVER_DATA[result.index].server,mail:SERVER_DATA[result.index].mail});
 
       }
-      //  console.log(result);
-      //  console.log(this.newmails);
     });
   }
-
 }
-
-
-
-// @Component({
-//   selector: 'field',
-//   templateUrl: 'field.html',
-// })
-// export class Field {
-//   constructor(public dialogRef: MatDialogRef<Field>,@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-//   onNoClick(): void {
-//     this.dialogRef.close();
-//   }
-// }
