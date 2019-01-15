@@ -70,3 +70,22 @@ table {
     color:green;
     font-weight: bold;
 }
+
+/* .refresh:hover
+{
+    cursor: pointer;
+    background-color: #3f51b5;
+} */
+
+tbody
+{
+    display: block;
+    height: 300px;
+    overflow: auto;
+}
+
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;/* even columns width , fix width of table too*/
+}

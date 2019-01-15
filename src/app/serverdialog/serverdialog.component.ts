@@ -2,8 +2,9 @@ import { Component,Inject } from '@angular/core';
 import {MatDialog,MAT_DIALOG_DATA,MatDialogRef} from '@angular/material';
 
 export interface DialogData {
+  server: string;
   mails: string;
-  index:number
+  index:number;
 }
 
 @Component({

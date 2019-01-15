@@ -3,12 +3,16 @@ import { SettingsService } from '../settings.service';
 import {Router} from '@angular/router';
 import { OverlayContainer} from '@angular/cdk/overlay';
 
+const dark = 'dark-theme';
+const light = 'default-theme';
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit 
+{
   title= 'alertingjsng';
   statuscolor = 'darkgreen';
   statustr = 'running'
@@ -21,22 +25,25 @@ export class MainComponent implements OnInit {
 
   darktheme:boolean = false;
 
-  constructor(private newsapi:SettingsService,private router: Router, public overlayContainer: OverlayContainer){
+  constructor(private newsapi:SettingsService,private router: Router, public overlayContainer: OverlayContainer)
+  {
     console.log('app component constructor called');
-   
   }
 
   @HostBinding('class') componentCssClass;
 
   ngOnInit() 
   {
-    this.options = [['Settings','settings'],['Servers','important_devices'],['Testing area','brush']];     
+    this.init();
   }
 
-
-  searchArticles(source){
-    console.log("selected source is: "+source);
-    // this.newsapi.getArticlesByID(source).subscribe(data => this.mArticles = data['articles']);
+  init()
+  {
+    this.options = [['Settings','settings'],['Servers','important_devices'],['Testing area','brush']];  
+    
+    let savedtheme:string = localStorage.getItem("theme");
+    if(savedtheme == dark)
+      this.toggleTheme();
   }
 
   changeStatus()
@@ -73,23 +80,26 @@ export class MainComponent implements OnInit {
 
   toggleTheme()
   {
-    let theme = 'dark-theme';
-    let theme2 = 'light-theme';
-    let theme3 = 'default-theme';
-
+    // let dark = 'dark-theme';
+    // let theme2 = 'light-theme';
+    // let light = 'default-theme';
+    
     this.darktheme = !this.darktheme;
 
-    if(this.darktheme === true)
+    if(this.darktheme)
     {
-      this.overlayContainer.getContainerElement().classList.add(theme);
-      this.componentCssClass = theme;
+      this.overlayContainer.getContainerElement().classList.add(dark);
+      this.componentCssClass = dark;
+      localStorage.setItem("theme", dark);
     }
     else
     {
-      this.overlayContainer.getContainerElement().classList.add(theme3);
-      this.componentCssClass = theme3;
+      this.overlayContainer.getContainerElement().classList.add(light);
+      this.componentCssClass = light;
+      localStorage.setItem("theme", light);
     }
   }
+
   logout()
   {
     this.router.navigate([""]);

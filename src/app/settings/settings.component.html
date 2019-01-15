@@ -11,7 +11,7 @@
       
     <ng-container matColumnDef="value">
       <th mat-header-cell *matHeaderCellDef> Value </th>
-      <td mat-cell *matCellDef="let setting" class="valuetd" (click)="openDialog(setting.name,setting.value,i)"> {{setting.value}} </td>
+      <td mat-cell *matCellDef="let setting; let i=index" class="valuetd" (click)="openDialog(setting.name,setting.value,i)"> {{setting.value}} </td>
     </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

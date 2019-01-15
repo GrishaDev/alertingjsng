@@ -1,31 +1,33 @@
-<mat-menu #appMenu="matMenu">
-    <button mat-menu-item (click)="toggleTheme()"> Dark theme </button>
-    <button mat-menu-item (click)="help()"> Help </button>
-    <button mat-menu-item (click)="changeStatus()"> change status </button>
-    <button mat-menu-item (click)="logout()"> Logout </button>
-  </mat-menu>
-  
-  
-  <mat-sidenav-container class="example-container" >
-    <mat-toolbar color="primary">
-      <button mat-button (click)="sidenav.open()" ><mat-icon>menu</mat-icon></button>
-      <span>Manage</span>  
-      <span class="example-spacer"></span>
-      <button mat-button [matMenuTriggerFor]="appMenu"><mat-icon>settings</mat-icon></button>
-    </mat-toolbar>
-  
-    <mat-sidenav #sidenav class="example-sidenav">
-      <mat-list class="list-nav">
-          <img src="../../assets/images/alertpng.png" class="avatar">
-          <mat-divider style="padding-top: 10%"></mat-divider>
-          <mat-list-item class="list-item" *ngFor="let source of options" (click)="navPress(source[0]);sidenav.close();">
-            <mat-icon>{{source[1]}}</mat-icon>
-            <span class="source-name"> {{source[0]}}</span>
-          </mat-list-item>
-      </mat-list>
-    </mat-sidenav>
-      <p class="title" color="primary"> service is {{ statustr }} </p>
-      <app-settings *ngIf="content==0"></app-settings>
-      <app-servers *ngIf="content==1"></app-servers>
-      <app-testingarea *ngIf="content==2"></app-testingarea>
-  </mat-sidenav-container>
+<div class="all">
+  <mat-menu #appMenu="matMenu">
+      <button mat-menu-item (click)="toggleTheme()"> Switch theme </button>
+      <button mat-menu-item (click)="help()"> Help </button>
+      <button mat-menu-item (click)="changeStatus()"> Change status </button>
+      <button mat-menu-item (click)="logout()"> Logout </button>
+    </mat-menu>
+    
+    
+   <mat-sidenav-container class="example-container" >
+      <mat-toolbar color="primary">
+        <button mat-button (click)="sidenav.open()" ><mat-icon>menu</mat-icon></button>
+        <span>Manage</span>  
+        <span class="example-spacer"></span>
+        <button mat-button [matMenuTriggerFor]="appMenu"><mat-icon>settings</mat-icon></button>
+      </mat-toolbar>
+    
+      <mat-sidenav #sidenav class="example-sidenav">
+        <mat-list class="list-nav">
+            <img src="../../assets/images/alertpng.png" class="avatar">
+            <mat-divider style="padding-top: 10%"></mat-divider>
+            <mat-list-item class="list-item" *ngFor="let source of options" (click)="navPress(source[0]);sidenav.close();">
+              <mat-icon>{{source[1]}}</mat-icon>
+              <span class="source-name"> {{source[0]}}</span>
+            </mat-list-item>
+        </mat-list>
+      </mat-sidenav>
+        <p class="title" color="primary"> service is {{ statustr }} </p>
+        <app-settings *ngIf="content==0"></app-settings>
+        <app-servers *ngIf="content==1"></app-servers>
+        <app-testingarea *ngIf="content==2"></app-testingarea>
+    </mat-sidenav-container>
+</div>
