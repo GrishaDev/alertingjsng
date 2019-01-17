@@ -1,0 +1,15 @@
+.title
+{
+    position: relative;
+    /* color: darkgreen; */
+    font-size: 2em;
+    text-align: center;
+}
+
+.subtitle
+{
+    position: relative;
+    /* color: darkgreen; */
+    font-size: 1em;
+    text-align: center;
+}

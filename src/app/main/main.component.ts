@@ -76,6 +76,7 @@ export class MainComponent implements OnInit
     {
       this.content = 2;
     }
+    console.log(this.content);
   }
 
   toggleTheme()
@@ -89,12 +90,14 @@ export class MainComponent implements OnInit
     if(this.darktheme)
     {
       this.overlayContainer.getContainerElement().classList.add(dark);
+      this.overlayContainer.getContainerElement().classList.remove(light);
       this.componentCssClass = dark;
       localStorage.setItem("theme", dark);
     }
     else
     {
       this.overlayContainer.getContainerElement().classList.add(light);
+      this.overlayContainer.getContainerElement().classList.remove(dark);
       this.componentCssClass = light;
       localStorage.setItem("theme", light);
     }

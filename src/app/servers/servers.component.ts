@@ -20,6 +20,14 @@ export interface Server {
 }
 
 
+let SERVER_DATA2: Server[] = [
+  {id: 0,server: 'harta', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,"+
+  "dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com"},
+  {id: 1,server: 'harta2', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
+  {id: 2,server: 'harta3', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
+  {id: 3,server: 'harta324', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
+  {id: 4,server: 'harta211', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"} ];
+
 let SERVER_DATA: Server[] = [
   {id: 0,server: 'harta', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,"+
   "dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com"},
@@ -63,7 +71,7 @@ export class ServersComponent implements OnInit
 
   first:boolean = true;
   yea:boolean = true;
-  peak:number = 10;
+  peak:number = 200;
   errormsg:string = "";
 
   animation = false;
@@ -76,7 +84,8 @@ export class ServersComponent implements OnInit
   {
     this.animation = true;
     this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
-    this.dataSource.paginator = this.paginator;
+    setTimeout(() => this.dataSource.paginator = this.paginator);
+    // setTimeout(function(){this.dataSource.paginator = this.paginator;},1000);
     this.updateTable();
     this.first=false;
   }

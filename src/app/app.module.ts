@@ -5,7 +5,7 @@ import { SettingsService } from './settings.service';
 import { ServersService } from './servers/servers.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule,MatTableModule,MatDialogModule,MatFormFieldModule,
-MatInputModule,MatPaginatorModule,MatOptionModule,MatSelectModule,MatProgressSpinnerModule} from '@angular/material';
+MatInputModule,MatPaginatorModule,MatOptionModule,MatSelectModule,MatProgressSpinnerModule,MatTabsModule} from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import {Routes,RouterModule, Router} from '@angular/router'
 
@@ -20,6 +20,7 @@ import { MainComponent } from './main/main.component';
 
 import { OverlayModule} from '@angular/cdk/overlay';
 import { TestingareaComponent } from './testingarea/testingarea.component';
+import { HomeComponent } from './home/home.component';
 
 const appRoutes: Routes =
 [
@@ -36,7 +37,8 @@ const appRoutes: Routes =
     SettingdialogComponent,
     LoginComponent,
     MainComponent,
-    TestingareaComponent
+    TestingareaComponent,
+    HomeComponent
   ],
   imports: [
     FormsModule,
@@ -58,6 +60,7 @@ const appRoutes: Routes =
     MatOptionModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatTabsModule,
     OverlayModule,
     RouterModule.forRoot(appRoutes)
   ],

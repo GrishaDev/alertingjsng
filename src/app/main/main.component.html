@@ -1,4 +1,5 @@
-<div class="all">
+<!-- class all on this div -->
+<div id="wrapper">
   <mat-menu #appMenu="matMenu">
       <button mat-menu-item (click)="toggleTheme()"> Switch theme </button>
       <button mat-menu-item (click)="help()"> Help </button>
@@ -9,12 +10,28 @@
     
    <mat-sidenav-container class="example-container" >
       <mat-toolbar color="primary">
-        <button mat-button (click)="sidenav.open()" ><mat-icon>menu</mat-icon></button>
-        <span>Manage</span>  
+        <!-- <button mat-button (click)="sidenav.open()" ><mat-icon>menu</mat-icon></button> -->
+        <img src="../../assets/images/alertpng.png" class="logo">
+        <span>Alerting Service</span>  
         <span class="example-spacer"></span>
         <button mat-button [matMenuTriggerFor]="appMenu"><mat-icon>settings</mat-icon></button>
       </mat-toolbar>
-    
+
+      <mat-tab-group id="tab-group">
+          <mat-tab label="Home">
+            <app-home></app-home>
+          </mat-tab>
+          <mat-tab label="Settings">
+            <app-settings></app-settings>
+          </mat-tab>
+          <mat-tab label="Servers">
+            <app-servers></app-servers>
+          </mat-tab>
+          <mat-tab label="Testing area">
+            <app-testingarea></app-testingarea>
+          </mat-tab>
+        </mat-tab-group>
+
       <mat-sidenav #sidenav class="example-sidenav">
         <mat-list class="list-nav">
             <img src="../../assets/images/alertpng.png" class="avatar">
@@ -25,9 +42,9 @@
             </mat-list-item>
         </mat-list>
       </mat-sidenav>
-        <p class="title" color="primary"> service is {{ statustr }} </p>
-        <app-settings *ngIf="content==0"></app-settings>
+        <!-- <p class="title" color="primary"> service is {{ statustr }} </p> -->
+        <!-- <app-settings *ngIf="content==0"></app-settings>
         <app-servers *ngIf="content==1"></app-servers>
-        <app-testingarea *ngIf="content==2"></app-testingarea>
+        <app-testingarea *ngIf="content==2"></app-testingarea> -->
     </mat-sidenav-container>
 </div>

@@ -72,7 +72,8 @@ export class SettingsComponent implements OnInit
   {
     console.log("settings component init");
     this.animation = true;
-    this.dataSource.paginator = this.paginator;
+    setTimeout(() => this.dataSource.paginator = this.paginator);
+    // this.dataSource.paginator = this.paginator;
     this.updateTable();
   }
 
