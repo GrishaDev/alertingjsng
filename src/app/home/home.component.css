@@ -13,3 +13,14 @@
     font-size: 1em;
     text-align: center;
 }
+
+.text-danger
+{
+    color:red;
+    font-weight: bold;
+}
+
+.middle
+{
+    text-align: center;
+}

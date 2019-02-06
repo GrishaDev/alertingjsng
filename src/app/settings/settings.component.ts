@@ -57,8 +57,11 @@ let SETTING_DATA: Setting[] = [
 export class SettingsComponent implements OnInit 
 {
   displayedColumns: string[] = ['name', 'value'];
-  dataSource = new MatTableDataSource<Setting>(SETTING_DATA);
+   dataSource;
   settingdata:string;
+
+  loading:boolean = false;
+  first:boolean = true;
 
   animation = false;
 
@@ -72,13 +75,20 @@ export class SettingsComponent implements OnInit
   {
     console.log("settings component init");
     this.animation = true;
-    setTimeout(() => this.dataSource.paginator = this.paginator);
+
+    // this.dataSource = new MatTableDataSource<Setting>(SETTING_DATA);
+    // setTimeout(() => this.dataSource.paginator = this.paginator);
+
     // this.dataSource.paginator = this.paginator;
     this.updateTable();
+    this.first=false;
   }
 
   updateTable()
   {
+    if(!this.first)
+    this.loading = true;
+
     this.settingsapi.getSettings().subscribe((data:any) =>
     {
 
@@ -88,9 +98,13 @@ export class SettingsComponent implements OnInit
       });
       this.dataSource = new MatTableDataSource<Setting>(SETTING_DATA);
       this.dataSource.paginator = this.paginator;
+      this.errormsg= "";
+      console.log("got new settings data");
+      setTimeout(function() {this.loading=false;}.bind(this), 500);
     },
     (err) => {console.log("Error contacting settings service, server down? details: "+JSON.stringify(err));
-    this.errormsg="Error getting data from database, try again soon."});
+    this.errormsg="Error getting data from database, try again soon."
+    this.loading=false;});
   }
 
 

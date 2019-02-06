@@ -3,7 +3,7 @@
   <mat-menu #appMenu="matMenu">
       <button mat-menu-item (click)="toggleTheme()"> Switch theme </button>
       <button mat-menu-item (click)="help()"> Help </button>
-      <button mat-menu-item (click)="changeStatus()"> Change status </button>
+      <!-- <button mat-menu-item (click)="changeStatus()"> Change status </button> -->
       <button mat-menu-item (click)="logout()"> Logout </button>
     </mat-menu>
     
@@ -14,11 +14,12 @@
         <img src="../../assets/images/alertpng.png" class="logo">
         <span>Alerting Service</span>  
         <span class="example-spacer"></span>
+        <p> buggy alpha</p>
         <button mat-button [matMenuTriggerFor]="appMenu"><mat-icon>settings</mat-icon></button>
       </mat-toolbar>
 
       <mat-tab-group id="tab-group">
-          <mat-tab label="Home">
+          <mat-tab label="Home" class="tab">
             <app-home></app-home>
           </mat-tab>
           <mat-tab label="Settings">
@@ -27,10 +28,10 @@
           <mat-tab label="Servers">
             <app-servers></app-servers>
           </mat-tab>
-          <mat-tab label="Testing area">
+          <!-- <mat-tab label="Testing area">
             <app-testingarea></app-testingarea>
-          </mat-tab>
-        </mat-tab-group>
+          </mat-tab> -->
+      </mat-tab-group>
 
       <mat-sidenav #sidenav class="example-sidenav">
         <mat-list class="list-nav">

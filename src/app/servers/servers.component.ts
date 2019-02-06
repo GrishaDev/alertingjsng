@@ -83,8 +83,10 @@ export class ServersComponent implements OnInit
   ngOnInit() 
   {
     this.animation = true;
-    this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
-    setTimeout(() => this.dataSource.paginator = this.paginator);
+
+    // this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
+    // setTimeout(() => this.dataSource.paginator = this.paginator);
+
     // setTimeout(function(){this.dataSource.paginator = this.paginator;},1000);
     this.updateTable();
     this.first=false;

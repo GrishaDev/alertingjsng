@@ -1,5 +1,5 @@
 import { Component, OnInit,HostBinding } from '@angular/core';
-import { SettingsService } from '../settings.service';
+import { HttpClient  } from '@angular/common/http';
 import {Router} from '@angular/router';
 import { OverlayContainer} from '@angular/cdk/overlay';
 
@@ -13,6 +13,7 @@ const light = 'default-theme';
 })
 export class MainComponent implements OnInit 
 {
+  host = ''
   title= 'alertingjsng';
   statuscolor = 'darkgreen';
   statustr = 'running'
@@ -25,7 +26,7 @@ export class MainComponent implements OnInit
 
   darktheme:boolean = false;
 
-  constructor(private newsapi:SettingsService,private router: Router, public overlayContainer: OverlayContainer)
+  constructor(private http:HttpClient,private router: Router, public overlayContainer: OverlayContainer)
   {
     console.log('app component constructor called');
   }
@@ -105,11 +106,12 @@ export class MainComponent implements OnInit
 
   logout()
   {
+    this.http.get(this.host+'/logout');
     this.router.navigate([""]);
   }
 
   help()
   {
-    alert("It's all so simple")
+    alert("no help in early alpha")
   }
 }

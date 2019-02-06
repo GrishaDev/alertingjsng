@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HomeService } from './home.service';
 
 @Component({
   selector: 'app-home',
@@ -7,11 +8,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private homeapi:HomeService) { }
 
-  mails:number = 9324;
-  hours:number = 240294;
+  mails:number = 0;
+  hours:number = 0;
+  errormsg:string ="";
+
   ngOnInit() {
+
+    this.homeapi.getCount().subscribe((data:any) =>
+    {
+      console.log(data);
+      var x:number = (data.minutes)/60
+      this.hours = Number(x.toFixed(2));
+    },
+    (err) => {console.log("Error contacting home service, server down? details: "+JSON.stringify(err));
+    this.errormsg="Error getting data from database, try again soon."});
+
+    this.homeapi.getMails().subscribe((data:any) =>
+    {
+      console.log(data);
+      this.mails = data.mails
+    },
+    (err) => {console.log("Error contacting home service, server down? details: "+JSON.stringify(err));
+    this.errormsg="Error getting data from database, try again soon."});
   }
 
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient  } from '@angular/common/http';
 
-const host = 'http://localhost:3000'
+const host = ''
 
 @Injectable({
   providedIn: 'root'

@@ -4,6 +4,7 @@ import {MatDialog} from '@angular/material'
 import { HttpClient  } from '@angular/common/http';
 import { NgForm } from '@angular/forms'
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 export class LoginComponent implements OnInit 
 {
   @ViewChild('f') form:NgForm;
-  constructor(private router: Router,private http:HttpClient) { }
+  constructor(private router: Router,private http:HttpClient,private loginservice:LoginService) { }
   username: string;
   password: string;
   valid:boolean = false;

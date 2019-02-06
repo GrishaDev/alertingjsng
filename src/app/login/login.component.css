@@ -15,7 +15,7 @@
     height: 35%;
     left: 25%;
     top: 25%;
-    min-height: 300px;
+    min-height: 700px;
     box-shadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
     text-align: center;
   }
@@ -26,6 +26,7 @@
     position: absolute;
     left: 25%;
     text-align: center; */
+    padding-top: 5%;
     width: 50%;
     height: 100%;
     margin: 0 auto;
@@ -43,9 +44,9 @@
     position: relative;
     bottom: 0;
     display: block;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     width: 25%;
-    height: 15%;
+    height: 10%;
   }
   .example-header-image {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
@@ -68,10 +69,10 @@
     position: absolute;
     background-color: white;
     width: 50%;
-    height: 35%;
+    height: 45%;
     left: 25%;
-    top: 25%;
-    min-height: 300px;
+    top: 20%;
+    min-height: 400px;
     box-shadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
     text-align: center;
   }
@@ -86,3 +87,36 @@
     cursor: not-allowed;
     background-color: lightgray;
   }
+
+  .aboveform
+  {
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+    /* background-color: red; */
+    font-size: 2em;
+  }
+  .avatar
+  {
+    position: absolute;
+    /* width: 5%; */
+    height: 100%;
+    left: 0;
+    display: inline-block;
+    /* margin: 0 auto; */
+  }
+
+  .logo
+  {
+    height: 50%;
+    display: block;
+    margin: 0 auto;
+    padding-right: 20px;
+  }
+
+.title
+{
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient  } from '@angular/common/http';
+// import * as config from './config.json';
 
-const host = 'http://localhost:3000'
+const host = ''
+// const dada:any = (<any>config);
 
 @Injectable({
   providedIn: 'root'
