@@ -12,6 +12,8 @@
     /* color: darkgreen; */
     font-size: 1em;
     text-align: center;
+    /* text-overflow: ellipsis; */
+    /* max-width: 20%; */
 }
 
 .text-danger

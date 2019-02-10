@@ -106,7 +106,7 @@ export class MainComponent implements OnInit
 
   logout()
   {
-    this.http.get(this.host+'/logout');
+    this.http.get(this.host+'/api/logout');
     this.router.navigate([""]);
   }
 
