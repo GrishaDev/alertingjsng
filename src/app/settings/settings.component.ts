@@ -132,13 +132,42 @@ export class SettingsComponent implements OnInit
   {
     this.settingsapi.postsettings(data).subscribe((res:any) =>
     {
-        if(res.status)
+        if(res.hack)
+        { 
+          console.log("nice cheater");
+          this.errormsg="Nice try, but it won't work";
+        }
+        else if(res.status)
         {
+          // this.updateTable();
           console.log("succesful settings update!");
         }
         else
         {
           console.log("failed settings update.");
+          this.errormsg="Error getting data from database, try again soon."
+        }
+    });
+  }
+
+  resetSettings()
+  {
+    this.settingsapi.resetSettings().subscribe((res:any) =>
+    {
+        if(res.hack)
+        {
+          console.log("nice cheater");
+          this.errormsg="Nice try, but it won't work";
+        }
+        else if(res.status)
+        {
+          this.updateTable();
+          console.log("succesful settings reset!");
+        }
+        else
+        {
+          console.log("failed settings reset.");
+          this.errormsg="Error getting data from database, try again soon."
         }
     });
   }

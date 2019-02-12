@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit
         },
         err => {
           console.log("Error occured+ :: "+err);
-          alert("Error connecting.");
+          it.err = "Error connecting";
         }
       );
     }

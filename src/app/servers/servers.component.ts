@@ -84,10 +84,10 @@ export class ServersComponent implements OnInit
   {
     this.animation = true;
 
-    // this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
-    // setTimeout(() => this.dataSource.paginator = this.paginator);
+    this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
+    setTimeout(() => this.dataSource.paginator = this.paginator);
 
-    // setTimeout(function(){this.dataSource.paginator = this.paginator;},1000);
+    setTimeout(function(){this.dataSource.paginator = this.paginator;},1000);
     this.updateTable();
     this.first=false;
   }
@@ -140,11 +140,13 @@ export class ServersComponent implements OnInit
     {
         if(res.status)
         {
+          // this.updateTable();
           console.log("succesful servers update!");
         }
         else
         {
           console.log("failed servers update.");
+          this.errormsg="Error getting data from database, try again soon."
         }
     });
   }

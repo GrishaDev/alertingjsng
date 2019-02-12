@@ -22,7 +22,7 @@
           <mat-tab label="Home" class="tab">
             <app-home></app-home>
           </mat-tab>
-          <mat-tab label="Settings">
+          <mat-tab label="Settings" [disabled]="disabled">
             <app-settings></app-settings>
           </mat-tab>
           <mat-tab label="Servers">

@@ -21,6 +21,7 @@
     </table>
     <mat-paginator [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons></mat-paginator>
     <button mat-icon-button style="position: absolute; bottom:10px; left:10px;" color="primary"><mat-icon (click)="updateTable()" title="refresh" class="refreshbtn">refresh</mat-icon></button>
+    <button mat-icon-button style="position: absolute; bottom:10px; left:50px;" color="primary"><mat-icon (click)="resetSettings()" title="reset settings" class="refreshbtn">build</mat-icon></button>
   </div>
   <p class="text-danger middle" *ngIf="errormsg">{{errormsg}}</p>
 <!-- </div> -->

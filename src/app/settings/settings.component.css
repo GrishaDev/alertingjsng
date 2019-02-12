@@ -27,7 +27,8 @@ table {
 
 .valuetd
 {
-    max-width: 15em;
+    width: 80%;
+    max-width: 20em;
     white-space: normal;
     word-break: break-all;
 }

@@ -1,58 +1,60 @@
 <!-- [@slideInOut] -->
-<p class="title" *ngIf="animation"> Servers list: </p>
+<div class="all">
+  <p class="title" *ngIf="animation"> Servers list: </p>
 
-<div class="mat-elevation-z8 centered" *ngIf="animation">
-  <table mat-table [dataSource]="dataSource">
-      
-      <ng-container matColumnDef="server">
-          <th mat-header-cell *matHeaderCellDef> Server </th>
-          <td mat-cell *matCellDef="let server"> {{server.server}} </td>
-      </ng-container>
+  <div class="mat-elevation-z8 centered" *ngIf="animation">
+    <table mat-table [dataSource]="dataSource">
         
-      <ng-container matColumnDef="cpu">
-        <th mat-header-cell *matHeaderCellDef> Cpu </th>
-        <td mat-cell *matCellDef="let server" [class.text-danger]="server.cpu > peak"> {{server.cpu}}% </td>
-      </ng-container>
+        <ng-container matColumnDef="server">
+            <th mat-header-cell *matHeaderCellDef> Server </th>
+            <td mat-cell *matCellDef="let server"> {{server.server}} </td>
+        </ng-container>
+          
+        <ng-container matColumnDef="cpu">
+          <th mat-header-cell *matHeaderCellDef> Cpu </th>
+          <td mat-cell *matCellDef="let server" [class.text-danger]="server.cpu > peak"> {{server.cpu}}% </td>
+        </ng-container>
 
-      <ng-container matColumnDef="ram">
-        <th mat-header-cell *matHeaderCellDef> Ram </th>
-        <td mat-cell *matCellDef="let server" [class.text-danger]="server.ram > peak" > {{server.ram}}% </td>
-      </ng-container>
+        <ng-container matColumnDef="ram">
+          <th mat-header-cell *matHeaderCellDef> Ram </th>
+          <td mat-cell *matCellDef="let server" [class.text-danger]="server.ram > peak" > {{server.ram}}% </td>
+        </ng-container>
 
-      <ng-container matColumnDef="overloaded">
-        <th mat-header-cell *matHeaderCellDef> Overloaded? </th>
-          <td mat-cell *matCellDef="let server" [class.text-danger]="server.overloaded" 
-          [class.text-correct]="!server.overloaded">
-          <mat-icon *ngIf="!server.overloaded">check</mat-icon>
-          <mat-icon *ngIf="server.overloaded">priority_high</mat-icon>
-          {{server.overloaded}} </td>
-      </ng-container>
-      <!-- [ngStyle]="{'color:':server.overloaded === 'true' ? 'red' : 'green' }" -->
-      <ng-container matColumnDef="mail">
-        <th mat-header-cell *matHeaderCellDef> Mail receivers </th>
-        <td mat-cell *matCellDef="let server; let i=index" (click)="openDialog(server.server,server.mail,i)" class="mailtd"> {{server.mail}} </td>
-      </ng-container>
+        <ng-container matColumnDef="overloaded">
+          <th mat-header-cell *matHeaderCellDef> Overloaded? </th>
+            <td mat-cell *matCellDef="let server" [class.text-danger]="server.overloaded" 
+            [class.text-correct]="!server.overloaded">
+            <mat-icon *ngIf="!server.overloaded">check</mat-icon>
+            <mat-icon *ngIf="server.overloaded">priority_high</mat-icon>
+            {{server.overloaded}} </td>
+        </ng-container>
+        <!-- [ngStyle]="{'color:':server.overloaded === 'true' ? 'red' : 'green' }" -->
+        <ng-container matColumnDef="mail">
+          <th mat-header-cell *matHeaderCellDef> Mail receivers </th>
+          <td mat-cell *matCellDef="let server; let i=index" (click)="openDialog(server.server,server.mail,i)" class="mailtd"> {{server.mail}} </td>
+        </ng-container>
 
-      <thead>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      </thead>
-      <tbody>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
-      </tbody>
-    </table>
-    <mat-paginator [pageSizeOptions]="[10, 5, 3]" showFirstLastButtons></mat-paginator>
-    <!-- <mat-toolbar class="pagtool" color="accent"> -->
-      <!-- <mat-toolbar-row> -->
-       <!--   <mat-icon (click)="updateTable()" title="refresh">refresh</mat-icon>
-          <span class="example-spacer"></span>
-        <mat-paginator [pageSizeOptions]="[10, 5, 3]" showFirstLastButtons></mat-paginator>-->
-      <!-- </mat-toolbar-row> -->
-    <!-- </mat-toolbar> -->
-    <button mat-icon-button style="position: absolute; bottom:10px; left:10px;" color="primary"><mat-icon (click)="updateTable()" title="refresh" class="refreshbtn">refresh</mat-icon></button>
+        <thead>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        </thead>
+        <tbody>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
+        </tbody>
+      </table>
+      <mat-paginator [pageSizeOptions]="[10, 5, 3]" showFirstLastButtons></mat-paginator>
+      <!-- <mat-toolbar class="pagtool" color="accent"> -->
+        <!-- <mat-toolbar-row> -->
+        <!--   <mat-icon (click)="updateTable()" title="refresh">refresh</mat-icon>
+            <span class="example-spacer"></span>
+          <mat-paginator [pageSizeOptions]="[10, 5, 3]" showFirstLastButtons></mat-paginator>-->
+        <!-- </mat-toolbar-row> -->
+      <!-- </mat-toolbar> -->
+      <button mat-icon-button style="position: absolute; bottom:10px; left:10px;" color="primary"><mat-icon (click)="updateTable()" title="refresh" class="refreshbtn">refresh</mat-icon></button>
+  </div>
+  <p class="text-danger middle" *ngIf="errormsg">{{errormsg}}</p>
+
+  <mat-spinner class="mid" color="warn" *ngIf="loading"></mat-spinner>
+    <!-- <p *ngIf="newmails">
+        You chose: <i>{{newmails}}</i>
+    </p> -->
 </div>
-<p class="text-danger middle" *ngIf="errormsg">{{errormsg}}</p>
-
-<mat-spinner class="mid" color="warn" *ngIf="loading"></mat-spinner>
-  <!-- <p *ngIf="newmails">
-      You chose: <i>{{newmails}}</i>
-  </p> -->

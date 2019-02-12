@@ -18,6 +18,14 @@
     /* background-color: red; */
 }
 
+textarea
+{
+    /* overflow-y: hidden; */
+    /* overflow-y: scroll; */
+}
+/* ::-webkit-scrollbar { 
+    display: none; 
+} */
 .field
 {
     height: 100%;

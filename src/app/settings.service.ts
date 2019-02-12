@@ -15,10 +15,15 @@ export class SettingsService
   
   getSettings()
   {
-   return this.http.get(host+'/api/getsettings');
+    return this.http.get(host+'/api/getsettings');
   }
   postsettings(data)
   {
     return this.http.post(host+'/api/postsettings',data);
+  }
+
+  resetSettings()
+  {
+    return this.http.get(host+'/api/initsettings');
   }
 }

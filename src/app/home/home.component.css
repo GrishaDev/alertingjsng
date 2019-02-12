@@ -1,3 +1,9 @@
+.all
+{
+    /* position: absolute; */
+    overflow-y: hidden;
+    height: auto;
+}
 .title
 {
     position: relative;

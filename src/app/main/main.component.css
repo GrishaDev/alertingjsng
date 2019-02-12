@@ -32,10 +32,11 @@
 
 /* .tab
 {
-    background-color: red;
+    overflow: hidden;
 } */
   #tab-group{
     height:90%;
+    /* overflow: hidden; */
   }
 
 

@@ -25,6 +25,8 @@ export class MainComponent implements OnInit
   content:number = 0;
 
   darktheme:boolean = false;
+  
+  disabled:boolean = true;
 
   constructor(private http:HttpClient,private router: Router, public overlayContainer: OverlayContainer)
   {
@@ -45,6 +47,12 @@ export class MainComponent implements OnInit
     let savedtheme:string = localStorage.getItem("theme");
     if(savedtheme == dark)
       this.toggleTheme();
+
+    this.http.get(this.host+'/api/auth').subscribe((data:any) =>
+    {
+      if(data.admin)
+        this.disabled = false;
+    });
   }
 
   changeStatus()
@@ -106,8 +114,12 @@ export class MainComponent implements OnInit
 
   logout()
   {
-    this.http.get(this.host+'/api/logout');
-    this.router.navigate([""]);
+    this.http.get(this.host+'/api/logout').subscribe((data:any) =>
+    {
+      if(data.logout)
+        this.router.navigate([""]);
+    });
+
   }
 
   help()
