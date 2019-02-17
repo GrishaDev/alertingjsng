@@ -1,6 +1,7 @@
 import { Component, OnInit,Inject,ViewChild } from '@angular/core';
 import {MatDialog,MAT_DIALOG_DATA,MatDialogRef,MatPaginator,MatTableDataSource} from '@angular/material';
 import { ServerdialogComponent } from '../serverdialog/serverdialog.component';
+import { GroupdialogComponent } from '../groupdialog/groupdialog.component';
 import { ServersService } from './servers.service';
 import { SettingsService } from '../settings.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
@@ -12,39 +13,40 @@ export interface DialogData {
 
 export interface Server {
   id: number,
-  server: string;
-  cpu: number;
-  ram: number;
-  overloaded: boolean;
+  group: string,
+  server: string,
+  cpu: number,
+  ram: number,
+  overloaded: boolean,
   mail: string;
 }
 
 
 let SERVER_DATA2: Server[] = [
-  {id: 0,server: 'harta', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,"+
+  {id: 0,group:"group1",server: 'harta', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,"+
   "dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com"},
-  {id: 1,server: 'harta2', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
-  {id: 2,server: 'harta3', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
-  {id: 3,server: 'harta324', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
-  {id: 4,server: 'harta211', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"} ];
+  {id: 1,group:"group1",server: 'harta2', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
+  {id: 2,group:"group1",server: 'harta3', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
+  {id: 3,group:"group1",server: 'harta324', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
+  {id: 4,group:"group1",server: 'harta211', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"} ];
 
 let SERVER_DATA: Server[] = [
-  {id: 0,server: 'harta', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,"+
+  {id: 0,group:"group1",server: 'harta', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,"+
   "dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com"},
-  {id: 1,server: 'harta2', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
-  {id: 2,server: 'harta3', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
-  {id: 3,server: 'harta324', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
-  {id: 4,server: 'harta211', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
-  {id: 5,server: 'harta324', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
-  {id: 6,server: 'harta342', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
-  {id: 7,server: 'harta234', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
-  {id: 8,server: 'harta337', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
-  {id: 9,server: 'harta', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
-  {id: 10,server: 'harta777', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
-  {id: 11,server: 'harta3', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
-  {id: 12,server: 'harta324', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
-  {id: 13,server: 'harta555', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
-  {id: 14,server: 'harta322', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"}
+  {id: 1,group:"group1",server: 'harta2', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
+  {id: 2,group:"group1",server: 'harta3', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
+  {id: 3,group:"group1",server: 'harta324', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
+  {id: 4,group:"group1",server: 'harta211', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
+  {id: 5,group:"group1",server: 'harta324', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
+  {id: 6,group:"group1",server: 'harta342', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
+  {id: 7,group:"group1",server: 'harta234', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
+  {id: 8,group:"group1",server: 'harta337', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
+  {id: 9,group:"group1",server: 'harta', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
+  {id: 10,group:"group1",server: 'harta777', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
+  {id: 11,group:"group1",server: 'harta3', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
+  {id: 12,group:"group1",server: 'harta324', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
+  {id: 13,group:"group1",server: 'harta555', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
+  {id: 14,group:"group1",server: 'harta322', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"}
 ];
 
 @Component({
@@ -65,7 +67,8 @@ let SERVER_DATA: Server[] = [
 })
 export class ServersComponent implements OnInit 
 {
-  displayedColumns: string[] = ['server', 'cpu','ram','overloaded','mail'];
+  displayedColumns: string[] = ['group','server', 'cpu','ram','overloaded','mail'];
+  filters: string [] = [];
   dataSource;
   loading:boolean = false;
 
@@ -87,7 +90,7 @@ export class ServersComponent implements OnInit
     this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
     setTimeout(() => this.dataSource.paginator = this.paginator);
 
-    setTimeout(function(){this.dataSource.paginator = this.paginator;},1000);
+    // setTimeout(function(){this.dataSource.paginator = this.paginator;},1000);
     this.updateTable();
     this.first=false;
   }
@@ -97,6 +100,8 @@ export class ServersComponent implements OnInit
     if(!this.first)
     this.loading = true;
 
+    this.makeFilters();
+  
     this.serversapi.getServers().subscribe((data:any) =>
     {
       SERVER_DATA = data;
@@ -115,6 +120,29 @@ export class ServersComponent implements OnInit
     this.loading=false;});
   }
   
+  makeFilters()
+  {
+    let group:string;
+
+    for(let i=0;i<SERVER_DATA.length;i++)
+    {
+      group = SERVER_DATA[i].group;
+      // for(let j=0; j<this.filters.length;j++)
+      // {
+      //   if(group != this.filters[j])
+      //   {
+      //     this.filters.push(group);
+      //   }
+      // }
+      if(this.filters.indexOf(group) === -1)
+      {
+        this.filters.push(group);
+      }
+    }
+
+    console.log("gwagwagwagwagwagwagwagw");
+    console.log(this.filters);
+  }
   getPeakValue()
   {
     this.settingsapi.getSettings().subscribe((data:any) =>
@@ -136,6 +164,7 @@ export class ServersComponent implements OnInit
 
   updateServers(data)
   {
+    this.makeFilters();
     this.serversapi.postsmails(data).subscribe((res:any) =>
     {
         if(res.status)
@@ -164,6 +193,7 @@ export class ServersComponent implements OnInit
 
   openDialog(server,mails,index): void 
   {
+    console.log(server+" "+mails+" "+index);
     const dialogRef = this.dialog.open(ServerdialogComponent, 
     {
       width: '450px',
@@ -176,9 +206,47 @@ export class ServersComponent implements OnInit
       if(result)
       {
         SERVER_DATA[result.index].mail = result.mails;
-        this.updateServers({server:SERVER_DATA[result.index].server,mail:SERVER_DATA[result.index].mail});
-
+        this.updateServers({server:SERVER_DATA[result.index].server,group:SERVER_DATA[result.index].group,mail:SERVER_DATA[result.index].mail});
       }
     });
+  }
+
+  openGroupDialog(server,index,group): void 
+  {
+    console.log(server+" "+group+" "+index);
+    const dialogRef = this.dialog.open(GroupdialogComponent, 
+    {
+      width: '450px',
+      data: {server:server,index:index,group:group}
+    });
+
+    dialogRef.afterClosed().subscribe(result => 
+    {
+      console.log(result);
+      if(result)
+      {
+        SERVER_DATA[result.index].group = result.group;
+        this.updateServers({server:SERVER_DATA[result.index].server,group:SERVER_DATA[result.index].group,mail:SERVER_DATA[result.index].mail});
+      }
+    });
+  }
+
+  checkBoxClick(filter:string,checked:boolean)
+  {
+    console.log("wawakjhasdgsaLKSAHDSA");
+    console.log(checked);    
+    // console.log(" CHECK BOX CLICK! "+filter);
+    if(checked === false)
+    {
+      console.log("empty now");
+      this.applyFilter('');
+    }
+    else
+    {
+      this.applyFilter(filter);
+    }
+  }
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

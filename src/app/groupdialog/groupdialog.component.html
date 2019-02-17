@@ -1,0 +1,15 @@
+<h1 mat-dialog-title class="middle">Change group for {{data.server}}</h1>
+<div mat-dialog-content class="middle">
+  
+  <mat-form-field class="field">
+        <!-- <input matInput [(ngModel)]="data.mails"> -->
+        <textarea matInput placeholder="Type:" [(ngModel)]="data.group">{{data.group}}</textarea>
+        <mat-hint align="start"><strong>Tag the server with group name</strong> </mat-hint>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions class="bot">
+    <!-- <button mat-button (click)="onNoClick()">nvm</button> -->
+    <button mat-button mat-dialog-close>back</button>
+    <span class="example-spacer"></span>
+    <button mat-button [mat-dialog-close]="data">Ok</button>
+</div>

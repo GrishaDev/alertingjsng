@@ -65,12 +65,20 @@ table {
     word-break: break-all;
 }
 
-.mailtd:hover
+hovering
+{
+
+}
+.hovering:hover
 {
     cursor: pointer;
-      background-color: #3f51b5;
-      color: white;
+    background-color: #3f51b5;
+    color: white;
 }
+/* .mailtd:hover
+{
+
+} */
 
 .text-danger
 {

@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit
 
       let it = this;
 
-      const req = this.http.post('http://localhost:3000/api/loginsubmit', {
+      const req = this.http.post('/api/loginsubmit', {
         "user": this.username,
         "pass": this.password
       })
