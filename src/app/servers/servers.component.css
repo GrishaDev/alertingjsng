@@ -65,6 +65,14 @@ table {
     word-break: break-all;
 }
 
+.grouptd
+{
+    width: 9%;
+    max-width: 20em;
+    white-space: normal;
+    word-break: break-all;
+}
+
 hovering
 {
 

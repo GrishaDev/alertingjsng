@@ -74,10 +74,13 @@ export class ServersComponent implements OnInit
 
   first:boolean = true;
   yea:boolean = true;
+  searchdisabled:boolean = false;
   peak:number = 200;
   errormsg:string = "";
 
   animation = false;
+  
+  defaultPredicate: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -85,11 +88,17 @@ export class ServersComponent implements OnInit
 
   ngOnInit() 
   {
+  
+
     this.animation = true;
 
     this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
     setTimeout(() => this.dataSource.paginator = this.paginator);
 
+    this.defaultPredicate = this.dataSource.filterPredicate;
+    // this.dataSource.filterPredicate = (data: Server, filter: string) => {
+    //   return data.group == filter;
+    //  };
     // setTimeout(function(){this.dataSource.paginator = this.paginator;},1000);
     this.updateTable();
     this.first=false;
@@ -123,7 +132,8 @@ export class ServersComponent implements OnInit
   makeFilters()
   {
     let group:string;
-
+    this.filters = [];
+    
     for(let i=0;i<SERVER_DATA.length;i++)
     {
       group = SERVER_DATA[i].group;
@@ -227,26 +237,39 @@ export class ServersComponent implements OnInit
       {
         SERVER_DATA[result.index].group = result.group;
         this.updateServers({server:SERVER_DATA[result.index].server,group:SERVER_DATA[result.index].group,mail:SERVER_DATA[result.index].mail});
+        this.makeFilters();
       }
     });
   }
 
   checkBoxClick(filter:string,checked:boolean)
   {
+    console.log(this.dataSource.filterPredicate);
     console.log("wawakjhasdgsaLKSAHDSA");
     console.log(checked);    
     // console.log(" CHECK BOX CLICK! "+filter);
     if(checked === false)
     {
+      this.searchdisabled = false;
+      this.dataSource.filterPredicate = this.defaultPredicate;
       console.log("empty now");
       this.applyFilter('');
     }
     else
     {
-      this.applyFilter(filter);
+        this.searchdisabled = true;
+        this.dataSource.filterPredicate = (data: Server, filter: string) => {
+        return data.group == filter;};
+        this.applyFilter(filter);
     }
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log("HAHAH "+this.dataSource.filter);
+  }
+
+  search(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    console.log("HAHAH "+this.dataSource.filter);
   }
 }
