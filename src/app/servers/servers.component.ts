@@ -67,8 +67,11 @@ let SERVER_DATA: Server[] = [
 })
 export class ServersComponent implements OnInit 
 {
+  initdata:Server[]=[];
+  tempdata:Server[]=[];
   displayedColumns: string[] = ['group','server', 'cpu','ram','overloaded','mail'];
   filters: string [] = [];
+  checkedfilters:string [] = [];
   dataSource;
   loading:boolean = false;
 
@@ -92,8 +95,14 @@ export class ServersComponent implements OnInit
 
     this.animation = true;
 
+
+    //comment this pls before build
     this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
     setTimeout(() => this.dataSource.paginator = this.paginator);
+    this.initdata = SERVER_DATA;
+    this.tempdata = SERVER_DATA;
+    // ------------------------------
+    console.log(this.initdata);
 
     this.defaultPredicate = this.dataSource.filterPredicate;
     // this.dataSource.filterPredicate = (data: Server, filter: string) => {
@@ -118,6 +127,8 @@ export class ServersComponent implements OnInit
         return a.id - b.id;
       });
       this.getPeakValue();
+      this.initdata= SERVER_DATA;
+      this.tempdata = SERVER_DATA;
       this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
       this.dataSource.paginator = this.paginator;
       this.errormsg= "";
@@ -133,7 +144,7 @@ export class ServersComponent implements OnInit
   {
     let group:string;
     this.filters = [];
-    
+
     for(let i=0;i<SERVER_DATA.length;i++)
     {
       group = SERVER_DATA[i].group;
@@ -174,6 +185,8 @@ export class ServersComponent implements OnInit
 
   updateServers(data)
   {
+    this.initdata = this.dataSource.data;
+    this.tempdata = this.dataSource.data;
     this.makeFilters();
     this.serversapi.postsmails(data).subscribe((res:any) =>
     {
@@ -242,26 +255,88 @@ export class ServersComponent implements OnInit
     });
   }
 
+  filterbyGroup(group:string)
+  {
+    return function(element)
+    {
+      console.log(element);
+      return element.group == group
+    }
+  }
+
+  parseFilterData()
+  { 
+    let groups = [];
+    let currentdata = this.initdata;
+    this.tempdata = currentdata;
+    let newdata = [];
+
+    for(let i=0; i<currentdata.length; i++)
+    {
+      for(let j=0; j<this.checkedfilters.length; j++)
+      {
+        if(currentdata[i].group == this.checkedfilters[j])
+        {
+          newdata.push(currentdata[i]);
+        }
+      }
+    }
+    this.dataSource = new MatTableDataSource<Server>(newdata);
+    this.dataSource.paginator = this.paginator;
+  }
   checkBoxClick(filter:string,checked:boolean)
   {
-    console.log(this.dataSource.filterPredicate);
-    console.log("wawakjhasdgsaLKSAHDSA");
-    console.log(checked);    
-    // console.log(" CHECK BOX CLICK! "+filter);
-    if(checked === false)
+    // let a = [];
+    // a = this.dataSource.data;
+    // a = a.filter((this.filterbyGroup(filter)))
+    // console.log(a);
+
+    if(checked)
     {
-      this.searchdisabled = false;
-      this.dataSource.filterPredicate = this.defaultPredicate;
-      console.log("empty now");
-      this.applyFilter('');
+      this.checkedfilters.push(filter);
+      console.log("You checked "+checked+" and here checked filters: "+this.checkedfilters);
+      this.parseFilterData();
     }
     else
     {
-        this.searchdisabled = true;
-        this.dataSource.filterPredicate = (data: Server, filter: string) => {
-        return data.group == filter;};
-        this.applyFilter(filter);
+      // console.log("You checked "+checked+" and here checked filters: "+this.checkedfilters);
+      let index:number = this.checkedfilters.indexOf(filter);
+      this.checkedfilters.splice(index,1);
+      console.log("You checked "+checked+" and here checked filters: "+this.checkedfilters);
+      if(this.checkedfilters.length == 0)
+      {
+        console.log("here u should get init data..");
+        this.dataSource = new MatTableDataSource<Server>(this.initdata);
+        this.dataSource.paginator = this.paginator;
+      }
+      else
+      {
+        console.log("here u should get tmp data");
+        // this.dataSource = new MatTableDataSource<Server>(this.tempdata);
+        // this.dataSource.paginator = this.paginator;
+        this.parseFilterData();
+      }
     }
+    //  this.dataSource = this.dataSource.filter(this.filterbyGroup(filter));
+
+    // console.log(this.dataSource.filterPredicate);
+    // console.log("wawakjhasdgsaLKSAHDSA");
+    // console.log(checked);    
+    // // console.log(" CHECK BOX CLICK! "+filter);
+    // if(checked === false)
+    // {
+    //   this.searchdisabled = false;
+    //   this.dataSource.filterPredicate = this.defaultPredicate;
+    //   console.log("empty now");
+    //   this.applyFilter('');
+    // }
+    // else
+    // {
+    //     this.searchdisabled = true;
+    //     this.dataSource.filterPredicate = (data: Server, filter: string) => {
+    //     return data.group == filter;};
+    //     this.applyFilter(filter);
+    // }
   }
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
