@@ -67,8 +67,8 @@ let SERVER_DATA: Server[] = [
 })
 export class ServersComponent implements OnInit 
 {
-  initdata:Server[]=[];
-  tempdata:Server[]=[];
+  // initdata:Server[]=[];
+  // tempdata:Server[]=[];
   displayedColumns: string[] = ['group','server', 'cpu','ram','overloaded','mail'];
   filters: string [] = [];
   checkedfilters:string [] = [];
@@ -99,10 +99,10 @@ export class ServersComponent implements OnInit
     //comment this pls before build
     this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
     setTimeout(() => this.dataSource.paginator = this.paginator);
-    this.initdata = SERVER_DATA;
-    this.tempdata = SERVER_DATA;
+    // this.initdata = SERVER_DATA;
+    // this.tempdata = SERVER_DATA;
     // ------------------------------
-    console.log(this.initdata);
+    // console.log(this.initdata);
 
     this.defaultPredicate = this.dataSource.filterPredicate;
     // this.dataSource.filterPredicate = (data: Server, filter: string) => {
@@ -127,8 +127,8 @@ export class ServersComponent implements OnInit
         return a.id - b.id;
       });
       this.getPeakValue();
-      this.initdata= SERVER_DATA;
-      this.tempdata = SERVER_DATA;
+      // this.initdata= SERVER_DATA;
+      // this.tempdata = SERVER_DATA;
       this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
       this.dataSource.paginator = this.paginator;
       this.errormsg= "";
@@ -185,8 +185,8 @@ export class ServersComponent implements OnInit
 
   updateServers(data)
   {
-    this.initdata = this.dataSource.data;
-    this.tempdata = this.dataSource.data;
+    // this.initdata = this.dataSource.data;
+    // this.tempdata = this.dataSource.data;
     this.makeFilters();
     this.serversapi.postsmails(data).subscribe((res:any) =>
     {
@@ -255,20 +255,25 @@ export class ServersComponent implements OnInit
     });
   }
 
-  filterbyGroup(group:string)
-  {
-    return function(element)
-    {
-      console.log(element);
-      return element.group == group
-    }
-  }
+  // filterbyGroup(group:string)
+  // {
+  //   return function(element)
+  //   {
+  //     console.log(element);
+  //     return element.group == group
+  //   }
+  // }
 
+  poop()
+  {
+    console.log("i am is "+this.dataSource.paginator);
+    this.dataSource.paginator = this.paginator
+  }
   parseFilterData()
   { 
     let groups = [];
-    let currentdata = this.initdata;
-    this.tempdata = currentdata;
+    let currentdata = SERVER_DATA;
+    // this.tempdata = currentdata;
     let newdata = [];
 
     for(let i=0; i<currentdata.length; i++)
@@ -281,8 +286,11 @@ export class ServersComponent implements OnInit
         }
       }
     }
+    console.log("parsed new data");
+    console.log(newdata);
     this.dataSource = new MatTableDataSource<Server>(newdata);
-    this.dataSource.paginator = this.paginator;
+    // setTimeout(() => this.dataSource.paginator = this.paginator);
+    setTimeout(this.poop.bind(this), 2000);
   }
   checkBoxClick(filter:string,checked:boolean)
   {
@@ -306,8 +314,8 @@ export class ServersComponent implements OnInit
       if(this.checkedfilters.length == 0)
       {
         console.log("here u should get init data..");
-        this.dataSource = new MatTableDataSource<Server>(this.initdata);
-        this.dataSource.paginator = this.paginator;
+        this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
+        setTimeout(() => this.dataSource.paginator = this.paginator);
       }
       else
       {
