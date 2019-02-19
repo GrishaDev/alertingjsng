@@ -72,6 +72,16 @@ export class ServersComponent implements OnInit
   displayedColumns: string[] = ['group','server', 'cpu','ram','overloaded','mail'];
   filters: string [] = [];
   checkedfilters:string [] = [];
+  checklist = [      
+  {value:'Elenor Anderson',isSelected:false},
+  {value:'Caden Kunze',isSelected:true},
+  {value:'Ms. Hortense Zulauf',isSelected:true},
+  {value:'Grady Reichert',isSelected:false},
+  {value:'Dejon Olson',isSelected:false},
+  {value:'Jamir Pfannerstill',isSelected:false},
+  {value:'Aracely Renner DVM',isSelected:false},
+  {value:'Genoveva Luettgen',isSelected:false}
+  ];
   grouplist:string [] = [];
   dataSource;
   loading:boolean = false;
@@ -79,6 +89,7 @@ export class ServersComponent implements OnInit
   first:boolean = true;
   yea:boolean = true;
   searchdisabled:boolean = false;
+  crap:boolean = false;
   peak:number = 200;
   errormsg:string = "";
 
@@ -103,15 +114,9 @@ export class ServersComponent implements OnInit
     // setTimeout(() => this.dataSource.paginator = this.paginator);
 
     // this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
-
+    // this.makeFilters();
     // ------------------------------
 
-
-    // this.defaultPredicate = this.dataSource.filterPredicate;
-    // this.dataSource.filterPredicate = (data: Server, filter: string) => {
-    //   return data.group == filter;
-    //  };
-    // setTimeout(function(){this.dataSource.paginator = this.paginator;},1000);
     this.updateTable();
     this.first=false;
   }
@@ -120,8 +125,6 @@ export class ServersComponent implements OnInit
   {
     if(!this.first)
     this.loading = true;
-
-    this.makeFilters();
   
     this.serversapi.getServers().subscribe((data:any) =>
     {
@@ -130,6 +133,8 @@ export class ServersComponent implements OnInit
         return a.id - b.id;
       });
       this.getPeakValue();
+      this.getGroupsList();
+      this.makeFilters();
       // this.initdata= SERVER_DATA;
       // this.tempdata = SERVER_DATA;
       this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
@@ -147,20 +152,16 @@ export class ServersComponent implements OnInit
   {
     let group:string;
     this.filters = [];
+    this.checklist = [];
 
     for(let i=0;i<SERVER_DATA.length;i++)
     {
       group = SERVER_DATA[i].group;
-      // for(let j=0; j<this.filters.length;j++)
-      // {
-      //   if(group != this.filters[j])
-      //   {
-      //     this.filters.push(group);
-      //   }
-      // }
+
       if(this.filters.indexOf(group) === -1)
       {
         this.filters.push(group);
+        this.checklist.push({value:group,isSelected:false});
       }
     }
 
@@ -188,6 +189,9 @@ export class ServersComponent implements OnInit
 
   getGroupsList()
   {
+    var x = "proservers,damoy,hamami,useless,amazing";
+    this.grouplist = x.split(',');
+
     this.settingsapi.getSettings().subscribe((data:any) =>
     {
       for(let i=0;i<data.length;i++)
@@ -196,6 +200,7 @@ export class ServersComponent implements OnInit
         {
           // let str = data[i].value;
           // let cropped = str.slice(0,str.length-1)
+          
           this.grouplist = data[i].value.split(',');
           console.log(this.grouplist);
         }
@@ -207,9 +212,7 @@ export class ServersComponent implements OnInit
 
   updateServers(data)
   {
-    // this.initdata = this.dataSource.data;
-    // this.tempdata = this.dataSource.data;
-    this.makeFilters();
+    // this.makeFilters();
     this.serversapi.postmails(data).subscribe((res:any) =>
     {
         if(res.hack)
@@ -232,8 +235,6 @@ export class ServersComponent implements OnInit
 
   updateGroups(data)
   {
-    // this.initdata = this.dataSource.data;
-    // this.tempdata = this.dataSource.data;
     this.makeFilters();
     this.serversapi.postgroups(data).subscribe((res:any) =>
     {
@@ -288,6 +289,7 @@ export class ServersComponent implements OnInit
 
   openGroupDialog(server,index,group): void 
   {
+    let oldgroup = group;
     console.log(server+" "+group+" "+index);
     const dialogRef = this.dialog.open(GroupdialogComponent, 
     {
@@ -300,27 +302,36 @@ export class ServersComponent implements OnInit
       console.log(result);
       if(result)
       {
+        this.uncheckAll();
+        this.filters = [];
+        this.checkedfilters =[];
+        console.log("??? "+this.crap);
+      
         SERVER_DATA[result.index].group = result.group;
         this.updateGroups({server:SERVER_DATA[result.index].server,group:SERVER_DATA[result.index].group});
-        this.makeFilters();
+        // let index = this.checkedfilters.indexOf(oldgroup);
+        // this.checkedfilters.splice(index,1);
+        console.log("WIPE NOW");
+        
+        // setTimeout(() => this.crap = false);
+
+        this.checkedfilters = [];
+
+        console.log("aaaaaaaaaaaaAAAAAAAAAAAAAAA");
+        console.log(this.checkedfilters);
+        console.log(this.filters);
+        this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
+        this.dataSource.paginator = this.paginator;
+        setTimeout(() => this.dataSource.paginator = this.paginator);
+        // this.checkedfilters.push(result.group);
+        // console.log("aaaaaaaaaaaaAAAAAAAAAAAAAAA");
+        // console.log(this.checkedfilters);
+        // this.makeFilters();
+        // this.parseFilterData();
       }
     });
   }
 
-  // filterbyGroup(group:string)
-  // {
-  //   return function(element)
-  //   {
-  //     console.log(element);
-  //     return element.group == group
-  //   }
-  // }
-
-  poop()
-  {
-    console.log("i am is "+this.dataSource.paginator);
-    this.dataSource.paginator = this.paginator
-  }
   parseFilterData()
   { 
     let groups = [];
@@ -328,6 +339,7 @@ export class ServersComponent implements OnInit
     // this.tempdata = currentdata;
     let newdata = [];
 
+    console.log("FUCK OFF PEICE OF SHIT "+this.checkedfilters);
     for(let i=0; i<currentdata.length; i++)
     {
       for(let j=0; j<this.checkedfilters.length; j++)
@@ -357,7 +369,15 @@ export class ServersComponent implements OnInit
 
     if(checked)
     {
+      console.log("HELLO?!?!?!? "+filter);
       this.checkedfilters.push(filter);
+      for(let i =0; i<this.checklist.length; i++)
+      {
+        if(this.checklist[i].value == filter)
+        {
+          this.checklist[i].isSelected = true;
+        }
+      }
       console.log("You checked "+checked+" and here checked filters: "+this.checkedfilters);
       this.parseFilterData();
     }
@@ -366,6 +386,14 @@ export class ServersComponent implements OnInit
       // console.log("You checked "+checked+" and here checked filters: "+this.checkedfilters);
       let index:number = this.checkedfilters.indexOf(filter);
       this.checkedfilters.splice(index,1);
+
+      for(let i =0; i<this.checklist.length; i++)
+      {
+        if(this.checklist[i].value == filter)
+        {
+          this.checklist[i].isSelected = false;
+        }
+      }
       console.log("You checked "+checked+" and here checked filters: "+this.checkedfilters);
       if(this.checkedfilters.length == 0)
       {
@@ -381,27 +409,14 @@ export class ServersComponent implements OnInit
         this.parseFilterData();
       }
     }
-    //  this.dataSource = this.dataSource.filter(this.filterbyGroup(filter));
-
-    // console.log(this.dataSource.filterPredicate);
-    // console.log("wawakjhasdgsaLKSAHDSA");
-    // console.log(checked);    
-    // // console.log(" CHECK BOX CLICK! "+filter);
-    // if(checked === false)
-    // {
-    //   this.searchdisabled = false;
-    //   this.dataSource.filterPredicate = this.defaultPredicate;
-    //   console.log("empty now");
-    //   this.applyFilter('');
-    // }
-    // else
-    // {
-    //     this.searchdisabled = true;
-    //     this.dataSource.filterPredicate = (data: Server, filter: string) => {
-    //     return data.group == filter;};
-    //     this.applyFilter(filter);
-    // }
   }
+
+  uncheckAll() {
+    for (var i = 0; i < this.checklist.length; i++) {
+      this.checklist[i].isSelected = false;
+    }
+  }
+
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     console.log("HAHAH "+this.dataSource.filter);

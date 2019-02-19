@@ -6,7 +6,9 @@
     <!-- <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
     </mat-form-field> -->
-    <mat-checkbox *ngFor="let filter of filters" style="margin-right: 10px;" [checked]="filter=='all'" (change)="checkBoxClick(filter,$event.checked)" color="warn">{{filter}}</mat-checkbox>
+    <!-- [(ngModel)]="crap" [checked]="false" -->
+    <!-- <mat-checkbox *ngFor="let filter of filters" style="margin-right: 10px;" (change)="checkBoxClick(filter,$event.checked)" color="warn">{{filter}}</mat-checkbox> -->
+    <mat-checkbox *ngFor="let item of checklist" [(ngModel)]="item.isSelected" style="margin-right: 10px;" (change)="checkBoxClick(item.value,$event.checked)" color="warn">{{item.value}}</mat-checkbox>
   </div>
   <br>
   <div class="mat-elevation-z8 centered" *ngIf="animation">
