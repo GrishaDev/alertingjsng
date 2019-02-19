@@ -18,8 +18,12 @@ export class ServersService
   {
     return this.http.post(host+'/api/postservers',data);
   }
-  postsmails(data)
+  postmails(data)
   {
     return this.http.post(host+'/api/postmails',data);
+  }
+  postgroups(data)
+  {
+    return this.http.post(host+'/api/postgroups',data);
   }
 }

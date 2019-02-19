@@ -98,14 +98,16 @@ export class ServersComponent implements OnInit
 
 
     //comment this pls before build, client side testing
-    this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
-    setTimeout(() => this.dataSource.paginator = this.paginator);
 
-    this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
+    // this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
+    // setTimeout(() => this.dataSource.paginator = this.paginator);
+
+    // this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
+
     // ------------------------------
 
 
-    this.defaultPredicate = this.dataSource.filterPredicate;
+    // this.defaultPredicate = this.dataSource.filterPredicate;
     // this.dataSource.filterPredicate = (data: Server, filter: string) => {
     //   return data.group == filter;
     //  };
@@ -194,7 +196,7 @@ export class ServersComponent implements OnInit
         {
           // let str = data[i].value;
           // let cropped = str.slice(0,str.length-1)
-          this.grouplist = data[i].value
+          this.grouplist = data[i].value.split(',');
           console.log(this.grouplist);
         }
       }
@@ -208,9 +210,39 @@ export class ServersComponent implements OnInit
     // this.initdata = this.dataSource.data;
     // this.tempdata = this.dataSource.data;
     this.makeFilters();
-    this.serversapi.postsmails(data).subscribe((res:any) =>
+    this.serversapi.postmails(data).subscribe((res:any) =>
     {
-        if(res.status)
+        if(res.hack)
+        { 
+          console.log("nice cheater");
+          this.errormsg="Nice try, but it won't work";
+        }
+        else if(res.status)
+        {
+          // this.updateTable();
+          console.log("succesful servers update!");
+        }
+        else
+        {
+          console.log("failed servers update.");
+          this.errormsg="Error getting data from database, try again soon."
+        }
+    });
+  }
+
+  updateGroups(data)
+  {
+    // this.initdata = this.dataSource.data;
+    // this.tempdata = this.dataSource.data;
+    this.makeFilters();
+    this.serversapi.postgroups(data).subscribe((res:any) =>
+    {
+        if(res.hack)
+        { 
+          console.log("nice cheater");
+          this.errormsg="Nice try, but it won't work";
+        }
+        else if(res.status)
         {
           // this.updateTable();
           console.log("succesful servers update!");
@@ -249,7 +281,7 @@ export class ServersComponent implements OnInit
       if(result)
       {
         SERVER_DATA[result.index].mail = result.mails;
-        this.updateServers({server:SERVER_DATA[result.index].server,group:SERVER_DATA[result.index].group,mail:SERVER_DATA[result.index].mail});
+        this.updateServers({server:SERVER_DATA[result.index].server,mail:SERVER_DATA[result.index].mail});
       }
     });
   }
@@ -269,7 +301,7 @@ export class ServersComponent implements OnInit
       if(result)
       {
         SERVER_DATA[result.index].group = result.group;
-        this.updateServers({server:SERVER_DATA[result.index].server,group:SERVER_DATA[result.index].group,mail:SERVER_DATA[result.index].mail});
+        this.updateGroups({server:SERVER_DATA[result.index].server,group:SERVER_DATA[result.index].group});
         this.makeFilters();
       }
     });
