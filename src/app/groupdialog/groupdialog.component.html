@@ -3,7 +3,13 @@
   
   <mat-form-field class="field">
         <!-- <input matInput [(ngModel)]="data.mails"> -->
-        <textarea matInput placeholder="Type:" [(ngModel)]="data.group">{{data.group}}</textarea>
+        <!-- <textarea matInput placeholder="Type:" [(ngModel)]="data.group">{{data.group}}</textarea> -->
+        <!-- <mat-form-field> -->
+          <mat-label >current group: {{data.group}}</mat-label>
+          <mat-select [(ngModel)]="data.group" #fontSize value="16px" (selectionChange)="triggerResize($event)">
+            <mat-option *ngFor="let a of data.grouplist" [value]="a">{{a}}</mat-option>
+          </mat-select>
+        <!-- </mat-form-field> -->
         <mat-hint align="start"><strong>Tag the server with group name</strong> </mat-hint>
   </mat-form-field>
 </div>

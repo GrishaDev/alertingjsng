@@ -72,6 +72,7 @@ export class ServersComponent implements OnInit
   displayedColumns: string[] = ['group','server', 'cpu','ram','overloaded','mail'];
   filters: string [] = [];
   checkedfilters:string [] = [];
+  grouplist:string [] = [];
   dataSource;
   loading:boolean = false;
 
@@ -96,13 +97,13 @@ export class ServersComponent implements OnInit
     this.animation = true;
 
 
-    //comment this pls before build
+    //comment this pls before build, client side testing
     this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
     setTimeout(() => this.dataSource.paginator = this.paginator);
-    // this.initdata = SERVER_DATA;
-    // this.tempdata = SERVER_DATA;
+
+    this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
     // ------------------------------
-    // console.log(this.initdata);
+
 
     this.defaultPredicate = this.dataSource.filterPredicate;
     // this.dataSource.filterPredicate = (data: Server, filter: string) => {
@@ -183,6 +184,25 @@ export class ServersComponent implements OnInit
     this.errormsg="Error getting some data from database, but overall ok"});
   }
 
+  getGroupsList()
+  {
+    this.settingsapi.getSettings().subscribe((data:any) =>
+    {
+      for(let i=0;i<data.length;i++)
+      {
+        if(data[i].name=="groups")
+        {
+          // let str = data[i].value;
+          // let cropped = str.slice(0,str.length-1)
+          this.grouplist = data[i].value
+          console.log(this.grouplist);
+        }
+      }
+    },
+    (err) => {console.log("Error contacting settings service, server down? details: "+JSON.stringify(err));
+    this.errormsg="Error getting some data from database, but overall ok"});
+  }
+
   updateServers(data)
   {
     // this.initdata = this.dataSource.data;
@@ -240,7 +260,7 @@ export class ServersComponent implements OnInit
     const dialogRef = this.dialog.open(GroupdialogComponent, 
     {
       width: '450px',
-      data: {server:server,index:index,group:group}
+      data: {server:server,index:index,group:group,grouplist:this.grouplist}
     });
 
     dialogRef.afterClosed().subscribe(result => 
@@ -289,8 +309,12 @@ export class ServersComponent implements OnInit
     console.log("parsed new data");
     console.log(newdata);
     this.dataSource = new MatTableDataSource<Server>(newdata);
-    // setTimeout(() => this.dataSource.paginator = this.paginator);
-    setTimeout(this.poop.bind(this), 2000);
+    console.log(this.dataSource.paginator);
+    console.log(this.paginator);
+    this.dataSource.paginator = this.paginator;
+    console.log(this.dataSource.paginator);
+    setTimeout(() => this.dataSource.paginator = this.paginator);
+    // setTimeout(this.poop.bind(this), 2000);
   }
   checkBoxClick(filter:string,checked:boolean)
   {
