@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { SettingsService } from './settings.service';
+import { SettingsService } from './settings/settings.service';
 import { ServersService } from './servers/servers.service';
+import { LogicService } from './logic.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule,MatTableModule,MatDialogModule,MatFormFieldModule,
 MatInputModule,MatPaginatorModule,MatOptionModule,MatSelectModule,MatProgressSpinnerModule,MatTabsModule,MatCheckboxModule} from '@angular/material';
@@ -13,15 +14,15 @@ import { AppComponent } from './app.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ServersComponent } from './servers/servers.component';
 // import { Field } from './servers/servers.component';
-import { ServerdialogComponent } from './serverdialog/serverdialog.component';
-import { SettingdialogComponent } from './settingdialog/settingdialog.component';
+import { ServerdialogComponent } from './servers/serverdialog/serverdialog.component';
+import { SettingdialogComponent } from './settings/settingdialog/settingdialog.component';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 
 import { OverlayModule} from '@angular/cdk/overlay';
 import { TestingareaComponent } from './testingarea/testingarea.component';
 import { HomeComponent } from './home/home.component';
-import { GroupdialogComponent } from './groupdialog/groupdialog.component';
+import { GroupdialogComponent } from './servers/groupdialog/groupdialog.component';
 
 const appRoutes: Routes =
 [
@@ -72,7 +73,7 @@ const appRoutes: Routes =
     SettingdialogComponent,
     GroupdialogComponent
   ],
-  providers: [SettingsService,ServersService],
+  providers: [SettingsService,ServersService,LogicService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

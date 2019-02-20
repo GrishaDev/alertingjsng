@@ -1,7 +1,7 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
 import {MatDialog,MAT_DIALOG_DATA,MatDialogRef,MatPaginator,MatTableDataSource} from '@angular/material';
-import { SettingdialogComponent } from '../settingdialog/settingdialog.component';
-import { SettingsService } from '../settings.service';
+import { SettingdialogComponent } from './settingdialog/settingdialog.component';
+import { SettingsService } from './settings.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 export interface Setting {

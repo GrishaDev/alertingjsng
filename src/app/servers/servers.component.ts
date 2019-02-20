@@ -1,9 +1,10 @@
 import { Component, OnInit,Inject,ViewChild } from '@angular/core';
 import {MatDialog,MAT_DIALOG_DATA,MatDialogRef,MatPaginator,MatTableDataSource} from '@angular/material';
-import { ServerdialogComponent } from '../serverdialog/serverdialog.component';
-import { GroupdialogComponent } from '../groupdialog/groupdialog.component';
+import { ServerdialogComponent } from './serverdialog/serverdialog.component';
+import { GroupdialogComponent } from './groupdialog/groupdialog.component';
 import { ServersService } from './servers.service';
-import { SettingsService } from '../settings.service';
+import { SettingsService } from '../settings/settings.service';
+import { LogicService } from '../logic.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 export interface DialogData {
@@ -20,15 +21,6 @@ export interface Server {
   overloaded: boolean,
   mail: string;
 }
-
-
-let SERVER_DATA2: Server[] = [
-  {id: 0,group:"group1",server: 'harta', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,"+
-  "dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com"},
-  {id: 1,group:"group1",server: 'harta2', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
-  {id: 2,group:"group1",server: 'harta3', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
-  {id: 3,group:"group1",server: 'harta324', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
-  {id: 4,group:"group1",server: 'harta211', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"} ];
 
 let SERVER_DATA: Server[] = [
   {id: 0,group:"group1",server: 'harta', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,"+
@@ -67,11 +59,8 @@ let SERVER_DATA: Server[] = [
 })
 export class ServersComponent implements OnInit 
 {
-  // initdata:Server[]=[];
-  // tempdata:Server[]=[];
   displayedColumns: string[] = ['group','server', 'cpu','ram','overloaded','mail'];
-  filters: string [] = [];
-  checkedfilters:string [] = [];
+
   checklist = [      
   ];
   grouplist:string [] = [];
@@ -91,15 +80,14 @@ export class ServersComponent implements OnInit
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(public dialog: MatDialog,private serversapi:ServersService,private settingsapi:SettingsService) { }
+  constructor(public dialog: MatDialog,private serversapi:ServersService,private settingsapi:SettingsService,
+    private logic:LogicService) { }
 
   ngOnInit() 
   {
-  
-
     this.animation = true;
-
-
+    console.log("Hello there ");
+    
     //comment this pls before build, client side testing
 
     this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
@@ -140,35 +128,18 @@ export class ServersComponent implements OnInit
   
   makeFilters()
   {
-    let group:string;
-    this.filters = [];
     this.checklist = [];
-
-    for(let i=0;i<SERVER_DATA.length;i++)
-    {
-      group = SERVER_DATA[i].group;
-
-      if(this.filters.indexOf(group) === -1)
-      {
-        this.filters.push(group);
-        this.checklist.push({value:group,isSelected:false});
-      }
-    }
+    this.checklist = this.logic.createCheckList(SERVER_DATA);
   }
+
   getPeakValue()
   {
     this.settingsapi.getSettings().subscribe((data:any) =>
     {
-      for(let i=0;i<data.length;i++)
-      {
-        if(data[i].name=="peak")
-        {
-          let str = data[i].value;
-          let cropped = str.slice(0,str.length-1)
-          this.peak = Number(cropped);
-          console.log(this.peak);
-        }
-      }
+      let str = this.logic.searchSettings(data,"groups");
+      let cropped = str.slice(0,str.length-1)
+      this.peak = Number(cropped);
+      console.log(this.peak);
     },
     (err) => {console.log("Error contacting settings service, server down? details: "+JSON.stringify(err));
     this.errormsg="Error getting some data from database, but overall ok"});
@@ -181,14 +152,7 @@ export class ServersComponent implements OnInit
 
     this.settingsapi.getSettings().subscribe((data:any) =>
     {
-      for(let i=0;i<data.length;i++)
-      {
-        if(data[i].name=="groups")
-        {
-          this.grouplist = data[i].value.split(',');
-          console.log(this.grouplist);
-        }
-      }
+      this.grouplist = this.logic.searchSettings(data,"groups").split(',');
     },
     (err) => {console.log("Error contacting settings service, server down? details: "+JSON.stringify(err));
     this.errormsg="Error getting some data from database, but overall ok"});
@@ -232,17 +196,6 @@ export class ServersComponent implements OnInit
     },
     (err) => {console.log("Error contacting servers service, server down? details: "+JSON.stringify(err));
     this.errormsg="Error updating groups, try again soon"});
-  }
-
-  parsemaildata(data)
-  {
-    let maildata = [];
-
-    for(let i=0; i<data.length;i++)
-    {
-      maildata.push({server:data[i].server,mail:data[i].mail})
-    }
-    return maildata;
   }
 
   openDialog(server,mails,index,group): void 
@@ -295,9 +248,8 @@ export class ServersComponent implements OnInit
       console.log(result);
       if(result)
       {
-        this.uncheckAll();
-        this.filters = [];
-        this.checkedfilters =[];
+        // this.uncheckAll();
+        this.checklist = this.logic.uncheckAll(this.checklist);
       
         SERVER_DATA[result.index].group = result.group;
         this.updateGroups({server:SERVER_DATA[result.index].server,group:SERVER_DATA[result.index].group});
@@ -310,56 +262,33 @@ export class ServersComponent implements OnInit
   }
 
   parseFilterData()
-  { 
-    let groups = [];
-    let currentdata = SERVER_DATA;
-    // this.tempdata = currentdata;
-    let newdata = [];
-
-    for(let i=0; i<currentdata.length; i++)
-    {
-      for(let j=0; j<this.checkedfilters.length; j++)
-      {
-        if(currentdata[i].group == this.checkedfilters[j])
-        {
-          newdata.push(currentdata[i]);
-        }
-      }
-    }
-
+  {
+    let checkedfilters = this.logic.getCheckedFilters(this.checklist);
+    // console.log(checkedfilters);
+    let newdata= this.logic.makeData(SERVER_DATA,checkedfilters);
+    // console.log(newdata);
     this.dataSource = new MatTableDataSource<Server>(newdata);
     this.dataSource.paginator = this.paginator;
     setTimeout(() => this.dataSource.paginator = this.paginator);
   }
+
   checkBoxClick(filter:string,checked:boolean)
   {
     if(checked)
     {
-      this.checkedfilters.push(filter);
-      for(let i =0; i<this.checklist.length; i++)
-      {
-        if(this.checklist[i].value == filter)
-        {
-          this.checklist[i].isSelected = true;
-        }
-      }
-      console.log("You checked "+checked+" and here checked filters: "+this.checkedfilters);
+      // this.checkedfilters.push(filter);
+      this.checklist = this.logic.tickChecklist(this.checklist,filter,true);
+      console.log(this.checklist);
+      // console.log("You checked "+checked+" and here checked filters: "+this.checkedfilters);
       this.parseFilterData();
     }
     else
     {
-      let index:number = this.checkedfilters.indexOf(filter);
-      this.checkedfilters.splice(index,1);
+      this.checklist = this.logic.tickChecklist(this.checklist,filter,false);
 
-      for(let i =0; i<this.checklist.length; i++)
-      {
-        if(this.checklist[i].value == filter)
-        {
-          this.checklist[i].isSelected = false;
-        }
-      }
-      console.log("You checked "+checked+" and here checked filters: "+this.checkedfilters);
-      if(this.checkedfilters.length == 0)
+      // console.log("You checked "+checked+" and here checked filters: "+this.checkedfilters);
+      let checkedfilters = this.logic.getCheckedFilters(this.checklist);
+      if(checkedfilters.length == 0)
       {
         console.log("here u should get init data..");
         this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
@@ -367,25 +296,10 @@ export class ServersComponent implements OnInit
       }
       else
       {
-        console.log("here u should get tmp data");
-        // this.dataSource = new MatTableDataSource<Server>(this.tempdata);
-        // this.dataSource.paginator = this.paginator;
         this.parseFilterData();
       }
     }
   }
-
-  uncheckAll() {
-    for (var i = 0; i < this.checklist.length; i++) {
-      this.checklist[i].isSelected = false;
-    }
-  }
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log("HAHAH "+this.dataSource.filter);
-  }
-
   search(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     console.log("HAHAH "+this.dataSource.filter);

@@ -2,14 +2,14 @@
 <div class="all">
   <p class="title" *ngIf="animation"> Servers list: </p>
 
-  <div class="mat-elevation-z8 centered centered" color="primary">
+  <mat-card class="mat-elevation-z8 centered filters" color="primary">
     <!-- <mat-form-field>
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
     </mat-form-field> -->
     <!-- [(ngModel)]="crap" [checked]="false" -->
     <!-- <mat-checkbox *ngFor="let filter of filters" style="margin-right: 10px;" (change)="checkBoxClick(filter,$event.checked)" color="warn">{{filter}}</mat-checkbox> -->
     <mat-checkbox *ngFor="let item of checklist" [(ngModel)]="item.isSelected" style="margin-right: 10px;" (change)="checkBoxClick(item.value,$event.checked)" color="warn">{{item.value}}</mat-checkbox>
-  </div>
+  </mat-card>
   <br>
   <div class="mat-elevation-z8 centered" *ngIf="animation">
     <table mat-table [dataSource]="dataSource">

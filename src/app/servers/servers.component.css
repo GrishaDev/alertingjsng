@@ -19,6 +19,9 @@ table {
     width: 80%;
     left: 10%;
   }
+  .filters {
+    padding: 0;
+  }
 
 .title
 {
@@ -70,7 +73,8 @@ table {
     width: 9%;
     max-width: 20em;
     white-space: normal;
-    word-break: break-all;
+    text-align: left;
+    /* word-break: break-all; */
 }
 
 hovering
