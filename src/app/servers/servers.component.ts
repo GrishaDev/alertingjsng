@@ -73,14 +73,6 @@ export class ServersComponent implements OnInit
   filters: string [] = [];
   checkedfilters:string [] = [];
   checklist = [      
-  {value:'Elenor Anderson',isSelected:false},
-  {value:'Caden Kunze',isSelected:true},
-  {value:'Ms. Hortense Zulauf',isSelected:true},
-  {value:'Grady Reichert',isSelected:false},
-  {value:'Dejon Olson',isSelected:false},
-  {value:'Jamir Pfannerstill',isSelected:false},
-  {value:'Aracely Renner DVM',isSelected:false},
-  {value:'Genoveva Luettgen',isSelected:false}
   ];
   grouplist:string [] = [];
   dataSource;
@@ -110,11 +102,11 @@ export class ServersComponent implements OnInit
 
     //comment this pls before build, client side testing
 
-    // this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
-    // setTimeout(() => this.dataSource.paginator = this.paginator);
+    this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
+    setTimeout(() => this.dataSource.paginator = this.paginator);
 
-    // this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
-    // this.makeFilters();
+    this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
+    this.makeFilters();
     // ------------------------------
 
     this.updateTable();
@@ -135,8 +127,6 @@ export class ServersComponent implements OnInit
       this.getPeakValue();
       this.getGroupsList();
       this.makeFilters();
-      // this.initdata= SERVER_DATA;
-      // this.tempdata = SERVER_DATA;
       this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
       this.dataSource.paginator = this.paginator;
       this.errormsg= "";
@@ -164,9 +154,6 @@ export class ServersComponent implements OnInit
         this.checklist.push({value:group,isSelected:false});
       }
     }
-
-    console.log("gwagwagwagwagwagwagwagw");
-    console.log(this.filters);
   }
   getPeakValue()
   {
@@ -198,9 +185,6 @@ export class ServersComponent implements OnInit
       {
         if(data[i].name=="groups")
         {
-          // let str = data[i].value;
-          // let cropped = str.slice(0,str.length-1)
-          
           this.grouplist = data[i].value.split(',');
           console.log(this.grouplist);
         }
@@ -225,12 +209,9 @@ export class ServersComponent implements OnInit
           // this.updateTable();
           console.log("succesful servers update!");
         }
-        else
-        {
-          console.log("failed servers update.");
-          this.errormsg="Error getting data from database, try again soon."
-        }
-    });
+    },
+    (err) => {console.log("Error contacting servers service, server down? details: "+JSON.stringify(err));
+    this.errormsg="Error updating mails, try again soon"});
   }
 
   updateGroups(data)
@@ -248,12 +229,9 @@ export class ServersComponent implements OnInit
           // this.updateTable();
           console.log("succesful servers update!");
         }
-        else
-        {
-          console.log("failed servers update.");
-          this.errormsg="Error getting data from database, try again soon."
-        }
-    });
+    },
+    (err) => {console.log("Error contacting servers service, server down? details: "+JSON.stringify(err));
+    this.errormsg="Error updating groups, try again soon"});
   }
 
   parsemaildata(data)
@@ -267,13 +245,13 @@ export class ServersComponent implements OnInit
     return maildata;
   }
 
-  openDialog(server,mails,index): void 
+  openDialog(server,mails,index,group): void 
   {
     console.log(server+" "+mails+" "+index);
     const dialogRef = this.dialog.open(ServerdialogComponent, 
     {
       width: '450px',
-      data: {server:server,mails: mails,index:index}
+      data: {server:server,mails: mails,index:index,group:group,tick:false}
     });
 
     dialogRef.afterClosed().subscribe(result => 
@@ -281,8 +259,23 @@ export class ServersComponent implements OnInit
       console.log(result);
       if(result)
       {
-        SERVER_DATA[result.index].mail = result.mails;
-        this.updateServers({server:SERVER_DATA[result.index].server,mail:SERVER_DATA[result.index].mail});
+        console.log("you ticked "+result.tick);
+        if(result.tick)
+        {
+          for(let i=0; i<SERVER_DATA.length; i++)
+          {
+            if(SERVER_DATA[i].group == result.group)
+            {
+              SERVER_DATA[i].mail = result.mails;
+              this.updateServers({server:SERVER_DATA[i].server,mail:SERVER_DATA[i].mail});
+            }
+          }
+        }
+        else
+        {
+          SERVER_DATA[result.index].mail = result.mails;
+          this.updateServers({server:SERVER_DATA[result.index].server,mail:SERVER_DATA[result.index].mail});
+        }
       }
     });
   }
@@ -305,29 +298,13 @@ export class ServersComponent implements OnInit
         this.uncheckAll();
         this.filters = [];
         this.checkedfilters =[];
-        console.log("??? "+this.crap);
       
         SERVER_DATA[result.index].group = result.group;
         this.updateGroups({server:SERVER_DATA[result.index].server,group:SERVER_DATA[result.index].group});
-        // let index = this.checkedfilters.indexOf(oldgroup);
-        // this.checkedfilters.splice(index,1);
-        console.log("WIPE NOW");
-        
-        // setTimeout(() => this.crap = false);
 
-        this.checkedfilters = [];
-
-        console.log("aaaaaaaaaaaaAAAAAAAAAAAAAAA");
-        console.log(this.checkedfilters);
-        console.log(this.filters);
         this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
         this.dataSource.paginator = this.paginator;
         setTimeout(() => this.dataSource.paginator = this.paginator);
-        // this.checkedfilters.push(result.group);
-        // console.log("aaaaaaaaaaaaAAAAAAAAAAAAAAA");
-        // console.log(this.checkedfilters);
-        // this.makeFilters();
-        // this.parseFilterData();
       }
     });
   }
@@ -339,7 +316,6 @@ export class ServersComponent implements OnInit
     // this.tempdata = currentdata;
     let newdata = [];
 
-    console.log("FUCK OFF PEICE OF SHIT "+this.checkedfilters);
     for(let i=0; i<currentdata.length; i++)
     {
       for(let j=0; j<this.checkedfilters.length; j++)
@@ -350,26 +326,15 @@ export class ServersComponent implements OnInit
         }
       }
     }
-    console.log("parsed new data");
-    console.log(newdata);
+
     this.dataSource = new MatTableDataSource<Server>(newdata);
-    console.log(this.dataSource.paginator);
-    console.log(this.paginator);
     this.dataSource.paginator = this.paginator;
-    console.log(this.dataSource.paginator);
     setTimeout(() => this.dataSource.paginator = this.paginator);
-    // setTimeout(this.poop.bind(this), 2000);
   }
   checkBoxClick(filter:string,checked:boolean)
   {
-    // let a = [];
-    // a = this.dataSource.data;
-    // a = a.filter((this.filterbyGroup(filter)))
-    // console.log(a);
-
     if(checked)
     {
-      console.log("HELLO?!?!?!? "+filter);
       this.checkedfilters.push(filter);
       for(let i =0; i<this.checklist.length; i++)
       {
@@ -383,7 +348,6 @@ export class ServersComponent implements OnInit
     }
     else
     {
-      // console.log("You checked "+checked+" and here checked filters: "+this.checkedfilters);
       let index:number = this.checkedfilters.indexOf(filter);
       this.checkedfilters.splice(index,1);
 

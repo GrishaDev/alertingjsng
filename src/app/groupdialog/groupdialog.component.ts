@@ -8,6 +8,7 @@ export interface DialogData {
   index:number;
   group:string;
   grouplist:string[];
+  tick:boolean;
 }
 
 @Component({
