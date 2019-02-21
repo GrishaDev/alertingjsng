@@ -8,7 +8,7 @@
 {
     position: relative;
     /* color: darkgreen; */
-    font-size: 2em;
+    font-size: 3em;
     text-align: center;
 }
 
@@ -16,7 +16,7 @@
 {
     position: relative;
     /* color: darkgreen; */
-    font-size: 1em;
+    font-size: 1.5em;
     text-align: center;
     /* text-overflow: ellipsis; */
     /* max-width: 20%; */
