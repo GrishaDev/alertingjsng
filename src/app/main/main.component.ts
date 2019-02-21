@@ -25,7 +25,8 @@ export class MainComponent implements OnInit
   content:number = 0;
 
   darktheme:boolean = false;
-  
+  memeswitch:boolean = false;
+  pic:string = "../../assets/images/alertpng.png"
   disabled:boolean = true;
 
   constructor(private http:HttpClient,private router: Router, public overlayContainer: OverlayContainer)
@@ -90,9 +91,6 @@ export class MainComponent implements OnInit
 
   toggleTheme()
   {
-    // let dark = 'dark-theme';
-    // let theme2 = 'light-theme';
-    // let light = 'default-theme';
     
     this.darktheme = !this.darktheme;
 
@@ -124,6 +122,16 @@ export class MainComponent implements OnInit
 
   help()
   {
-    alert("no help in early alpha")
+    alert("biranium?");
+    this.memeswitch = !this.memeswitch
+
+    if(this.memeswitch)
+    {
+      this.pic = "../../assets/images/biran.png";
+    }
+    else
+    {
+      this.pic = "../../assets/images/alertpng.png";
+    }
   }
 }

@@ -7,17 +7,6 @@ export class LogicService {
 
   constructor() { }
 
-  // parsemaildata(data)
-  // {
-  //   let maildata = [];
-
-  //   for(let i=0; i<data.length;i++)
-  //   {
-  //     maildata.push({server:data[i].server,mail:data[i].mail})
-  //   }
-  //   return maildata;
-  // }
-
   makeData(data,checkedfilters)
   {
     let currentdata = data;;
@@ -111,8 +100,4 @@ export class LogicService {
     }
     return checkedfilters;
   }
-
-
-
-
 }

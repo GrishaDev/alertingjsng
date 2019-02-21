@@ -94,8 +94,10 @@
     position: absolute;
     width: 100%;
     /* background-color: red; */
+    height: 10%;
     font-size: 2em;
   }
+
   .avatar
   {
     position: absolute;
@@ -118,5 +120,5 @@
 {
   display: inline-block;
   margin: 0;
-  padding: 0;
+  padding-top: 3%;
 }

@@ -90,11 +90,11 @@ export class ServersComponent implements OnInit
     
     //comment this pls before build, client side testing
 
-    this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
-    setTimeout(() => this.dataSource.paginator = this.paginator);
+    // this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
+    // setTimeout(() => this.dataSource.paginator = this.paginator);
 
-    this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
-    this.makeFilters();
+    // this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
+    // this.makeFilters();
     // ------------------------------
 
     this.updateTable();
@@ -147,8 +147,8 @@ export class ServersComponent implements OnInit
 
   getGroupsList()
   {
-    var x = "proservers,damoy,hamami,useless,amazing";
-    this.grouplist = x.split(',');
+    // var x = "proservers,damoy,hamami,useless,amazing";
+    // this.grouplist = x.split(',');
 
     this.settingsapi.getSettings().subscribe((data:any) =>
     {
