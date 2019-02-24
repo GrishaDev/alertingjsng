@@ -109,7 +109,10 @@ hovering
     cursor: pointer;
     background-color: #3f51b5;
 } */
-
+.columntitle
+{
+    font-size: 1em;
+}
 tbody
 {
     display: block;

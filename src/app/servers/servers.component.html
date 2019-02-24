@@ -12,30 +12,30 @@
   </mat-card>
   <br>
   <div class="mat-elevation-z8 centered" *ngIf="animation">
-    <table mat-table [dataSource]="dataSource">
+    <table mat-table [dataSource]="dataSource" matSort>
         
         <ng-container matColumnDef="group">
-          <th mat-header-cell *matHeaderCellDef> Group </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="columntitle"> Group </th>
           <td mat-cell *matCellDef="let server" (click)="openGroupDialog(server.server,server.id,server.group)" class="hovering grouptd"> {{server.group}} </td>
         </ng-container>
 
         <ng-container matColumnDef="server">
-            <th mat-header-cell *matHeaderCellDef> Server </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="columntitle"> Server </th>
             <td mat-cell *matCellDef="let server"> {{server.server}} </td>
         </ng-container>
           
         <ng-container matColumnDef="cpu">
-          <th mat-header-cell *matHeaderCellDef> Cpu </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="columntitle"> Cpu </th>
           <td mat-cell *matCellDef="let server" [class.text-danger]="server.cpu > peak"> {{server.cpu}}% </td>
         </ng-container>
 
         <ng-container matColumnDef="ram">
-          <th mat-header-cell *matHeaderCellDef> Ram </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="columntitle"> Ram </th>
           <td mat-cell *matCellDef="let server" [class.text-danger]="server.ram > peak" > {{server.ram}}% </td>
         </ng-container>
 
         <ng-container matColumnDef="overloaded">
-          <th mat-header-cell *matHeaderCellDef> Overloaded? </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="columntitle"> Overloaded? </th>
             <td mat-cell *matCellDef="let server" [class.text-danger]="server.overloaded" 
             [class.text-correct]="!server.overloaded">
             <mat-icon *ngIf="!server.overloaded">check</mat-icon>
@@ -44,7 +44,7 @@
         </ng-container>
         <!-- [ngStyle]="{'color:':server.overloaded === 'true' ? 'red' : 'green' }" -->
         <ng-container matColumnDef="mail">
-          <th mat-header-cell *matHeaderCellDef> Mail receivers </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header class="columntitle"> Mail receivers </th>
           <td mat-cell *matCellDef="let server; let i=index" (click)="openDialog(server.server,server.mail,server.id,server.group)" class="hovering mailtd"> {{server.mail}} </td>
         </ng-container>
 

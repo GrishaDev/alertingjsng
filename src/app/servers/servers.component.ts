@@ -1,5 +1,5 @@
 import { Component, OnInit,Inject,ViewChild } from '@angular/core';
-import {MatDialog,MAT_DIALOG_DATA,MatDialogRef,MatPaginator,MatTableDataSource} from '@angular/material';
+import {MatDialog,MAT_DIALOG_DATA,MatDialogRef,MatPaginator,MatTableDataSource,MatSort} from '@angular/material';
 import { ServerdialogComponent } from './serverdialog/serverdialog.component';
 import { GroupdialogComponent } from './groupdialog/groupdialog.component';
 import { ServersService } from './servers.service';
@@ -79,6 +79,7 @@ export class ServersComponent implements OnInit
   defaultPredicate: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(public dialog: MatDialog,private serversapi:ServersService,private settingsapi:SettingsService,
     private logic:LogicService) { }
@@ -91,8 +92,7 @@ export class ServersComponent implements OnInit
     //comment this pls before build, client side testing
 
     this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
-    setTimeout(() => this.dataSource.paginator = this.paginator);
-
+    setTimeout(() => {this.dataSource.paginator = this.paginator; this.dataSource.sort = this.sort;});
     this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
     this.makeFilters();
     // ------------------------------
@@ -256,7 +256,7 @@ export class ServersComponent implements OnInit
 
         this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
         this.dataSource.paginator = this.paginator;
-        setTimeout(() => this.dataSource.paginator = this.paginator);
+        setTimeout(() => {this.dataSource.paginator = this.paginator; this.dataSource.sort = this.sort;});
       }
     });
   }
@@ -269,7 +269,7 @@ export class ServersComponent implements OnInit
     // console.log(newdata);
     this.dataSource = new MatTableDataSource<Server>(newdata);
     this.dataSource.paginator = this.paginator;
-    setTimeout(() => this.dataSource.paginator = this.paginator);
+    setTimeout(() => {this.dataSource.paginator = this.paginator; this.dataSource.sort = this.sort;});
   }
 
   checkBoxClick(filter:string,checked:boolean)
@@ -292,7 +292,7 @@ export class ServersComponent implements OnInit
       {
         console.log("here u should get init data..");
         this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
-        setTimeout(() => this.dataSource.paginator = this.paginator);
+        setTimeout(() => {this.dataSource.paginator = this.paginator; this.dataSource.sort = this.sort;});
       }
       else
       {

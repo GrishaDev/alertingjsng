@@ -6,7 +6,7 @@ import { ServersService } from './servers/servers.service';
 import { LogicService } from './logic.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule,MatTableModule,MatDialogModule,MatFormFieldModule,
-MatInputModule,MatPaginatorModule,MatOptionModule,MatSelectModule,MatProgressSpinnerModule,MatTabsModule,MatCheckboxModule} from '@angular/material';
+MatInputModule,MatPaginatorModule,MatOptionModule,MatSelectModule,MatProgressSpinnerModule,MatTabsModule,MatCheckboxModule,MatSortModule} from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import {Routes,RouterModule, Router} from '@angular/router'
 
@@ -65,6 +65,7 @@ const appRoutes: Routes =
     MatProgressSpinnerModule,
     MatTabsModule,
     MatCheckboxModule,
+    MatSortModule,
     OverlayModule,
     RouterModule.forRoot(appRoutes)
   ],
