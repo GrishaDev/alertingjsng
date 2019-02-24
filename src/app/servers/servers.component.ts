@@ -91,10 +91,10 @@ export class ServersComponent implements OnInit
     
     //comment this pls before build, client side testing
 
-    this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
-    setTimeout(() => {this.dataSource.paginator = this.paginator; this.dataSource.sort = this.sort;});
-    this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
-    this.makeFilters();
+    // this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
+    // setTimeout(() => {this.dataSource.paginator = this.paginator; this.dataSource.sort = this.sort;});
+    // this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
+    // this.makeFilters();
     // ------------------------------
 
     this.updateTable();
@@ -116,7 +116,8 @@ export class ServersComponent implements OnInit
       this.getGroupsList();
       this.makeFilters();
       this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
-      this.dataSource.paginator = this.paginator;
+      // this.dataSource.paginator = this.paginator;
+      setTimeout(() => {this.dataSource.paginator = this.paginator; this.dataSource.sort = this.sort;});
       this.errormsg= "";
       console.log("got new server data");
       setTimeout(function() {this.loading=false;}.bind(this), 500);
