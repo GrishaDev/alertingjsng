@@ -14,15 +14,17 @@
   </ul> -->
   <mat-form-field class="field">
         <!-- <input matInput [(ngModel)]="data.mails"> -->
-        <textarea matInput placeholder="Type:" [(ngModel)]="data.mails">{{data.mails}}</textarea>
+        <!-- [class.bad]="!good" [class.good]="good" -->
+        <textarea matInput placeholder="Type:" [(ngModel)]="data.mails" (input)="valid(data.mails)">{{data.mails}}</textarea>
         <mat-hint align="start"><strong>Include ' , ' between mails to make a list</strong> </mat-hint>
   </mat-form-field>
 </div>
 <br>
 <mat-checkbox [(ngModel)]="data.tick" style="margin-left: 0;" color="warn">Include for every member of group {{data.group}}?</mat-checkbox>
+<p class="text-danger" *ngIf="errormsg">{{errormsg}}</p>
 <div mat-dialog-actions class="bot">
     <!-- <button mat-button (click)="onNoClick()">nvm</button> -->
     <button mat-button mat-dialog-close>back</button>
     <span class="example-spacer"></span>
-    <button mat-button [mat-dialog-close]="data">Ok</button>
+    <button mat-button [mat-dialog-close]="data" [disabled]="!good">Ok</button>
 </div>

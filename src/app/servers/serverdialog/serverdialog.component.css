@@ -21,3 +21,19 @@
     height: 100%;
     width: 100%;
 }
+
+.good
+{
+    color: primary;
+}
+
+.bad
+{
+    color: red;
+}
+
+.text-danger
+{
+    color:red;
+    font-weight: bold;
+}
