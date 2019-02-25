@@ -1,12 +1,16 @@
-import { Component, OnInit,HostBinding } from '@angular/core';
+import { Component, OnInit,HostBinding ,Output} from '@angular/core';
 import { HttpClient  } from '@angular/common/http';
 import {Router} from '@angular/router';
 import { OverlayContainer} from '@angular/cdk/overlay';
+import { HomeComponent } from '../home/home.component';
+import { ServersComponent } from '../servers/servers.component';
+import { SettingsComponent } from '../settings/settings.component';
 
 const dark = 'dark-theme';
 const light = 'default-theme';
 
 @Component({
+  providers:[HomeComponent,ServersComponent,SettingsComponent],
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
@@ -29,7 +33,15 @@ export class MainComponent implements OnInit
   pic:string = "../../assets/images/alertpng.png"
   disabled:boolean = true;
 
-  constructor(private http:HttpClient,private router: Router, public overlayContainer: OverlayContainer)
+  // @Output() myEvent = new EventEmitter();
+  // function2(){
+  //   this.myEvent.emit(null)
+  // }
+
+  
+
+  constructor(private http:HttpClient,private router: Router, public overlayContainer: OverlayContainer,private home:HomeComponent
+  ,private servers:ServersComponent,private settings:SettingsComponent)
   {
     console.log('app component constructor called');
   }
@@ -132,6 +144,23 @@ export class MainComponent implements OnInit
     else
     {
       this.pic = "../../assets/images/alertpng.png";
+    }
+  }
+
+  tabChanged($event)
+  {
+    console.log($event);
+    if($event.index == 0)
+    {
+      this.home.onView();
+    }
+    else if($event.index == 1)
+    {
+      this.settings.onView();
+    }
+    else if($event.index == 2)
+    {
+      this.servers.onView();
     }
   }
 }

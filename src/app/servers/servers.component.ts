@@ -83,6 +83,12 @@ export class ServersComponent implements OnInit
 
   constructor(public dialog: MatDialog,private serversapi:ServersService,private settingsapi:SettingsService,
     private logic:LogicService) { }
+  
+  onView()
+  {
+    console.log("viewing Servers tab");
+    this.updateTable();
+  }
 
   ngOnInit() 
   {
@@ -91,10 +97,10 @@ export class ServersComponent implements OnInit
     
     //comment this pls before build, client side testing
 
-    // this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
-    // setTimeout(() => {this.dataSource.paginator = this.paginator; this.dataSource.sort = this.sort;});
-    // this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
-    // this.makeFilters();
+    this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
+    setTimeout(() => {this.dataSource.paginator = this.paginator; this.dataSource.sort = this.sort;});
+    this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
+    this.makeFilters();
     // ------------------------------
 
     this.updateTable();

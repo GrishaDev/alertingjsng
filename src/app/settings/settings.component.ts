@@ -71,6 +71,12 @@ export class SettingsComponent implements OnInit
 
   constructor(public dialog: MatDialog,private settingsapi:SettingsService) { }
 
+  onView()
+  {
+    console.log("viewing Settings tab");
+    this.updateTable();
+  }
+
   ngOnInit() 
   {
     console.log("settings component init");

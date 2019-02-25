@@ -19,7 +19,7 @@
         <button mat-button [matMenuTriggerFor]="appMenu"><mat-icon>settings</mat-icon></button>
       </mat-toolbar>
 
-      <mat-tab-group id="tab-group">
+      <mat-tab-group id="tab-group" (selectedTabChange)="tabChanged($event)">
           <mat-tab label="Home" class="tab">
             <app-home></app-home>
           </mat-tab>
