@@ -1,23 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Injectable } from '@angular/core';
 import { HomeService } from './home.service';
 // import { Injectable } from '@angular/core';
 // import { Observable } from 'rxjs/Observable';
+import { SharedService } from '../main/shared.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-// @Injectable()
+@Injectable()
 export class HomeComponent implements OnInit {
 
 
-  constructor(private homeapi:HomeService) { }
+  constructor(private homeapi:HomeService,private shared: SharedService) { }
 
   mails:number = 0;
   hours:number = 0;
   minutes:number = 0;
   errormsg:string ="";
+  index:number;
 
   onView()
   {
@@ -25,10 +27,25 @@ export class HomeComponent implements OnInit {
     this.updateData();
   }
 
-  ngOnInit() {
+  receiveMessage($event) {
+    // this.message = $event
+    console.log($event);
+  }
 
+  wakeup()
+  {
+    console.log("I am home!");
     this.updateData();
   }
+
+  ngOnInit() {
+    this.shared.homeMessage.subscribe(index => this.wakeup());
+    this.updateData();
+  }
+
+  // newMessage() {
+  //   this.shared.changeMessage("Hello from Sibling")
+  // }
 
   updateData()
   {

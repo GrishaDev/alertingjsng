@@ -1,4 +1,4 @@
-import { Component, OnInit,Inject,ViewChild } from '@angular/core';
+import { Component, OnInit,Inject,ViewChild, Injectable } from '@angular/core';
 import {MatDialog,MAT_DIALOG_DATA,MatDialogRef,MatPaginator,MatTableDataSource,MatSort} from '@angular/material';
 import { ServerdialogComponent } from './serverdialog/serverdialog.component';
 import { GroupdialogComponent } from './groupdialog/groupdialog.component';
@@ -6,6 +6,7 @@ import { ServersService } from './servers.service';
 import { SettingsService } from '../settings/settings.service';
 import { LogicService } from '../logic.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { SharedService } from '../main/shared.service';
 
 export interface DialogData {
   mails: string;
@@ -57,6 +58,8 @@ let SERVER_DATA: Server[] = [
     ])
   ]
 })
+
+@Injectable()
 export class ServersComponent implements OnInit 
 {
   displayedColumns: string[] = ['group','server', 'cpu','ram','overloaded','mail'];
@@ -82,7 +85,7 @@ export class ServersComponent implements OnInit
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(public dialog: MatDialog,private serversapi:ServersService,private settingsapi:SettingsService,
-    private logic:LogicService) { }
+    private logic:LogicService,private shared: SharedService) { }
   
   onView()
   {
@@ -90,17 +93,24 @@ export class ServersComponent implements OnInit
     this.updateTable();
   }
 
+  wakeup()
+  {
+    console.log("I am servers!");
+    this.updateTable();
+  }
+
   ngOnInit() 
   {
+    this.shared.serversMessage.subscribe(index => this.wakeup());
     this.animation = true;
     console.log("Hello there ");
     
     //comment this pls before build, client side testing
 
-    this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
-    setTimeout(() => {this.dataSource.paginator = this.paginator; this.dataSource.sort = this.sort;});
-    this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
-    this.makeFilters();
+    // this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
+    // setTimeout(() => {this.dataSource.paginator = this.paginator; this.dataSource.sort = this.sort;});
+    // this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
+    // this.makeFilters();
     // ------------------------------
 
     this.updateTable();

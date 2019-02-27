@@ -1,7 +1,8 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild, Injectable } from '@angular/core';
 import {MatDialog,MAT_DIALOG_DATA,MatDialogRef,MatPaginator,MatTableDataSource} from '@angular/material';
 import { SettingdialogComponent } from './settingdialog/settingdialog.component';
 import { SettingsService } from './settings.service';
+import { SharedService } from '../main/shared.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 export interface Setting {
@@ -54,6 +55,7 @@ let SETTING_DATA: Setting[] = [
     ])
   ]
 })
+@Injectable()
 export class SettingsComponent implements OnInit 
 {
   displayedColumns: string[] = ['name', 'value'];
@@ -69,7 +71,7 @@ export class SettingsComponent implements OnInit
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(public dialog: MatDialog,private settingsapi:SettingsService) { }
+  constructor(public dialog: MatDialog,private settingsapi:SettingsService,private shared: SharedService) { }
 
   onView()
   {
@@ -77,8 +79,15 @@ export class SettingsComponent implements OnInit
     this.updateTable();
   }
 
+  wakeup()
+  {
+    console.log("I am settings!");
+    this.updateTable();
+  }
+
   ngOnInit() 
   {
+    this.shared.settingsMessage.subscribe(index => this.wakeup());
     console.log("settings component init");
     this.animation = true;
 

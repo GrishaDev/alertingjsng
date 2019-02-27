@@ -4,6 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { SettingsService } from './settings/settings.service';
 import { ServersService } from './servers/servers.service';
 import { LogicService } from './logic.service';
+import { SharedService } from './main/shared.service';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule,MatTableModule,MatDialogModule,MatFormFieldModule,
 MatInputModule,MatPaginatorModule,MatOptionModule,MatSelectModule,MatProgressSpinnerModule,MatTabsModule,MatCheckboxModule,MatSortModule} from '@angular/material';
@@ -23,6 +25,7 @@ import { OverlayModule} from '@angular/cdk/overlay';
 import { TestingareaComponent } from './testingarea/testingarea.component';
 import { HomeComponent } from './home/home.component';
 import { GroupdialogComponent } from './servers/groupdialog/groupdialog.component';
+import { TestComponent } from './main/test/test.component';
 
 const appRoutes: Routes =
 [
@@ -41,7 +44,8 @@ const appRoutes: Routes =
     MainComponent,
     TestingareaComponent,
     HomeComponent,
-    GroupdialogComponent
+    GroupdialogComponent,
+    TestComponent
   ],
   imports: [
     FormsModule,
@@ -74,7 +78,7 @@ const appRoutes: Routes =
     SettingdialogComponent,
     GroupdialogComponent
   ],
-  providers: [SettingsService,ServersService,LogicService],
+  providers: [SettingsService,ServersService,LogicService,SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

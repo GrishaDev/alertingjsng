@@ -1,10 +1,11 @@
-import { Component, OnInit,HostBinding ,Output} from '@angular/core';
+import { Component, OnInit,HostBinding ,Output,ViewChild,AfterViewInit, EventEmitter} from '@angular/core';
 import { HttpClient  } from '@angular/common/http';
 import {Router} from '@angular/router';
 import { OverlayContainer} from '@angular/cdk/overlay';
 import { HomeComponent } from '../home/home.component';
 import { ServersComponent } from '../servers/servers.component';
 import { SettingsComponent } from '../settings/settings.component';
+import { SharedService } from './shared.service';
 
 const dark = 'dark-theme';
 const light = 'default-theme';
@@ -15,7 +16,7 @@ const light = 'default-theme';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent implements OnInit 
+export class MainComponent implements OnInit
 {
   host = ''
   title= 'alertingjsng';
@@ -33,6 +34,8 @@ export class MainComponent implements OnInit
   pic:string = "../../assets/images/alertpng.png"
   disabled:boolean = true;
 
+  message:string;
+
   // @Output() myEvent = new EventEmitter();
   // function2(){
   //   this.myEvent.emit(null)
@@ -41,15 +44,22 @@ export class MainComponent implements OnInit
   
 
   constructor(private http:HttpClient,private router: Router, public overlayContainer: OverlayContainer,private home:HomeComponent
-  ,private servers:ServersComponent,private settings:SettingsComponent)
+  ,private servers:ServersComponent,private settings:SettingsComponent,private shared:SharedService)
   {
     console.log('app component constructor called');
   }
 
   @HostBinding('class') componentCssClass;
 
+  // @ViewChild(HomeComponent) HomeComponent: HomeComponent;
+  // @ViewChild(SettingsComponent) SettingsComponent: SettingsComponent;
+  // @ViewChild(ServersComponent) ServersComponent: ServersComponent;
+
+  // @Output() messageEvent = new EventEmitter<string>();
+
   ngOnInit() 
   {
+    // this.shared.currentMessage.subscribe(message =>  message)
     this.init();
   }
 
@@ -150,17 +160,19 @@ export class MainComponent implements OnInit
   tabChanged($event)
   {
     console.log($event);
+
     if($event.index == 0)
     {
-      this.home.onView();
+      this.shared.wakeupHome();
     }
-    else if($event.index == 1)
-    {
-      this.settings.onView();
-    }
-    else if($event.index == 2)
-    {
-      this.servers.onView();
-    }
+    // else if($event.index == 1)
+    // {
+    //   this.shared.wakeupSettings();
+    // }
+    // else if($event.index == 2)
+    // {
+    //   this.shared.wakeupServers();
+    // }
   }
+
 }
