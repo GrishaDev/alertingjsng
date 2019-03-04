@@ -1,9 +1,6 @@
-
-
-<!-- [@slideInOut] -->
-<!-- <div class="all"> -->
-  <p class="title"  *ngIf="animation"> Settings list: </p>
-  <div class="mat-elevation-z8 centered"  *ngIf="animation" >
+  <!-- <p class="title"> Settings list: </p> -->
+  <page-title title="Settings list:"></page-title>
+  <div class="mat-elevation-z8 centered">
 
   <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="name">
@@ -24,6 +21,4 @@
     <button mat-icon-button style="position: absolute; bottom:10px; left:50px;" color="primary"><mat-icon (click)="resetSettings()" title="reset settings" class="refreshbtn">build</mat-icon></button>
   </div>
   <p class="text-danger middle" *ngIf="errormsg">{{errormsg}}</p>
-<!-- </div> -->
-
-<mat-spinner class="mid" color="warn" *ngIf="loading"></mat-spinner>
+<mat-spinner class="mid" color="warn" *ngIf="isloading"></mat-spinner>

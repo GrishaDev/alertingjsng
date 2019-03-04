@@ -64,20 +64,13 @@ export class ServersComponent implements OnInit
 {
   displayedColumns: string[] = ['group','server', 'cpu','ram','overloaded','mail'];
 
-  checklist = [      
-  ];
+  checklist = [];
   grouplist:string [] = [];
   dataSource;
-  loading:boolean = false;
-
-  first:boolean = true;
-  yea:boolean = true;
-  searchdisabled:boolean = false;
-  crap:boolean = false;
+  isloading:boolean = false;
+  isfirst:boolean = true;
   peak:number = 200;
   errormsg:string = "";
-
-  animation = false;
   
   defaultPredicate: any;
 
@@ -87,11 +80,11 @@ export class ServersComponent implements OnInit
   constructor(public dialog: MatDialog,private serversapi:ServersService,private settingsapi:SettingsService,
     private logic:LogicService,private shared: SharedService) { }
   
-  onView()
-  {
-    console.log("viewing Servers tab");
-    this.updateTable();
-  }
+  // onView()
+  // {
+  //   console.log("viewing Servers tab");
+  //   this.updateTable();
+  // }
 
   wakeup()
   {
@@ -102,7 +95,6 @@ export class ServersComponent implements OnInit
   ngOnInit() 
   {
     this.shared.serversMessage.subscribe(index => this.wakeup());
-    this.animation = true;
     console.log("Hello there ");
     
     //comment this pls before build, client side testing
@@ -114,13 +106,13 @@ export class ServersComponent implements OnInit
     // ------------------------------
 
     this.updateTable();
-    this.first=false;
+    this.isfirst=false;
   }
 
   updateTable()
   {
-    if(!this.first)
-    this.loading = true;
+    if(!this.isfirst)
+    this.isloading = true;
   
     this.serversapi.getServers().subscribe((data:any) =>
     {
@@ -140,7 +132,7 @@ export class ServersComponent implements OnInit
     },
     (err) => {console.log("Error contacting servers service, server down? details: "+JSON.stringify(err));
     this.errormsg="Error getting data from database, try again soon.";
-    this.loading=false;});
+    this.isloading=false;});
   }
   
   makeFilters()
@@ -164,9 +156,6 @@ export class ServersComponent implements OnInit
 
   getGroupsList()
   {
-    // var x = "proservers,damoy,hamami,useless,amazing";
-    // this.grouplist = x.split(',');
-
     this.settingsapi.getSettings().subscribe((data:any) =>
     {
       this.grouplist = this.logic.searchSettings(data,"groups").split(',');
@@ -307,7 +296,7 @@ export class ServersComponent implements OnInit
       let checkedfilters = this.logic.getCheckedFilters(this.checklist);
       if(checkedfilters.length == 0)
       {
-        console.log("here u should get init data..");
+        // console.log("here u should get init data..");
         this.dataSource = new MatTableDataSource<Server>(SERVER_DATA);
         setTimeout(() => {this.dataSource.paginator = this.paginator; this.dataSource.sort = this.sort;});
       }
@@ -319,6 +308,6 @@ export class ServersComponent implements OnInit
   }
   search(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log("HAHAH "+this.dataSource.filter);
+    // console.log("HAHAH "+this.dataSource.filter);
   }
 }

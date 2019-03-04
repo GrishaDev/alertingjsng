@@ -1,9 +1,8 @@
 .middle
 {
     text-align: center; 
-    /* background-color: lightblue; */
 }
-.example-spacer {
+.spacer {
     flex: 1 0 auto;
   }
 
@@ -15,17 +14,13 @@
     padding: 0;
     margin: 0;
     bottom: 0;
-    /* background-color: red; */
 }
 
 textarea
 {
-    /* overflow-y: hidden; */
-    /* overflow-y: scroll; */
+
 }
-/* ::-webkit-scrollbar { 
-    display: none; 
-} */
+
 .field
 {
     height: 100%;

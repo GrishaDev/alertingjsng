@@ -22,26 +22,17 @@ export class MainComponent implements OnInit
   title= 'alertingjsng';
   statuscolor = 'darkgreen';
   statustr = 'running'
-  mArticles:Array<any>;
-  mSources:Array<any>;
-  options:Array<any>;
+  tabs:Array<any>;
 
-  status:boolean = true;
   content:number = 0;
 
-  darktheme:boolean = false;
-  memeswitch:boolean = false;
+  isdarktheme:boolean = false;
+  ismemeswitch:boolean = false;
   pic:string = "../../assets/images/alertpng.png"
-  disabled:boolean = true;
+  isdisabled:boolean = true;
 
   message:string;
 
-  // @Output() myEvent = new EventEmitter();
-  // function2(){
-  //   this.myEvent.emit(null)
-  // }
-
-  
 
   constructor(private http:HttpClient,private router: Router, public overlayContainer: OverlayContainer,private home:HomeComponent
   ,private servers:ServersComponent,private settings:SettingsComponent,private shared:SharedService)
@@ -51,21 +42,15 @@ export class MainComponent implements OnInit
 
   @HostBinding('class') componentCssClass;
 
-  // @ViewChild(HomeComponent) HomeComponent: HomeComponent;
-  // @ViewChild(SettingsComponent) SettingsComponent: SettingsComponent;
-  // @ViewChild(ServersComponent) ServersComponent: ServersComponent;
-
-  // @Output() messageEvent = new EventEmitter<string>();
 
   ngOnInit() 
   {
-    // this.shared.currentMessage.subscribe(message =>  message)
     this.init();
   }
 
   init()
   {
-    this.options = [['Settings','settings'],['Servers','important_devices'],['Testing area','brush']];  
+    this.tabs= [['Settings','settings'],['Servers','important_devices'],['Testing area','brush']];  
     
     let savedtheme:string = localStorage.getItem("theme");
     if(savedtheme == dark)
@@ -74,49 +59,33 @@ export class MainComponent implements OnInit
     this.http.get(this.host+'/api/auth').subscribe((data:any) =>
     {
       if(data.admin)
-        this.disabled = false;
+        this.isdisabled = false;
     });
   }
 
-  changeStatus()
-  {
-    if(this.status)
-    {
-      this.status = false;
-      this.statuscolor = 'red';
-      this.statustr = 'down'
-    }
-    else
-    {
-      this.status = true;
-      this.statuscolor = 'darkgreen';
-      this.statustr = 'running'
-    }
-  }
 
-  navPress(option)
-  {
-    if(option == "Settings")
-    {
-      this.content = 0;
-    }
-    else if(option == "Servers")
-    {
-      this.content = 1;
-    }
-    else if(option == "Testing area")
-    {
-      this.content = 2;
-    }
-    console.log(this.content);
-  }
+  // navPress(option)
+  // {
+  //   if(option == "Settings")
+  //   {
+  //     this.content = 0;
+  //   }
+  //   else if(option == "Servers")
+  //   {
+  //     this.content = 1;
+  //   }
+  //   else if(option == "Testing area")
+  //   {
+  //     this.content = 2;
+  //   }
+  //   console.log(this.content);
+  // }
 
   toggleTheme()
   {
-    
-    this.darktheme = !this.darktheme;
+    this.isdarktheme = !this.isdarktheme;
 
-    if(this.darktheme)
+    if(this.isdarktheme)
     {
       this.overlayContainer.getContainerElement().classList.add(dark);
       this.overlayContainer.getContainerElement().classList.remove(light);
@@ -139,15 +108,14 @@ export class MainComponent implements OnInit
       if(data.logout)
         this.router.navigate([""]);
     });
-
   }
 
   help()
   {
     alert("biranium?");
-    this.memeswitch = !this.memeswitch
+    this.ismemeswitch = !this.ismemeswitch
 
-    if(this.memeswitch)
+    if(this.ismemeswitch)
     {
       this.pic = "../../assets/images/biran.png";
     }
@@ -174,5 +142,4 @@ export class MainComponent implements OnInit
     //   this.shared.wakeupServers();
     // }
   }
-
 }

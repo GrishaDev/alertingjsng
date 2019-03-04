@@ -59,13 +59,11 @@ let SETTING_DATA: Setting[] = [
 export class SettingsComponent implements OnInit 
 {
   displayedColumns: string[] = ['name', 'value'];
-   dataSource;
+  dataSource;
   settingdata:string;
 
-  loading:boolean = false;
-  first:boolean = true;
-
-  animation = false;
+  isloading:boolean = false;
+  isfirst:boolean = true;
 
   errormsg:string = "";
 
@@ -73,11 +71,11 @@ export class SettingsComponent implements OnInit
 
   constructor(public dialog: MatDialog,private settingsapi:SettingsService,private shared: SharedService) { }
 
-  onView()
-  {
-    console.log("viewing Settings tab");
-    this.updateTable();
-  }
+  // onView()
+  // {
+  //   console.log("viewing Settings tab");
+  //   this.updateTable();
+  // }
 
   wakeup()
   {
@@ -89,20 +87,19 @@ export class SettingsComponent implements OnInit
   {
     this.shared.settingsMessage.subscribe(index => this.wakeup());
     console.log("settings component init");
-    this.animation = true;
 
     // this.dataSource = new MatTableDataSource<Setting>(SETTING_DATA);
     // setTimeout(() => this.dataSource.paginator = this.paginator);
 
     // this.dataSource.paginator = this.paginator;
     this.updateTable();
-    this.first=false;
+    this.isfirst=false;
   }
 
   updateTable()
   {
-    if(!this.first)
-    this.loading = true;
+    if(!this.isfirst)
+    this.isloading = true;
 
     this.settingsapi.getSettings().subscribe((data:any) =>
     {
@@ -119,13 +116,13 @@ export class SettingsComponent implements OnInit
     },
     (err) => {console.log("Error contacting settings service, server down? details: "+JSON.stringify(err));
     this.errormsg="Error getting data from database, try again soon."
-    this.loading=false;});
+    this.isloading=false;});
   }
 
 
   openDialog(setting,value,index): void 
   {
-    console.log("wawawaw "+index);
+    // console.log("wawawaw "+index);
     const dialogRef = this.dialog.open(SettingdialogComponent, 
     {
       width: '450px',

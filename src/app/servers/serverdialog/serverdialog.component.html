@@ -1,17 +1,7 @@
 <h1 mat-dialog-title class="middle">Change mail recievers for {{data.server}}</h1>
 <div mat-dialog-content class="middle">
   
-  <!-- <ul>
-    <li>
-      <span *ngIf="data.newmails === 'da'">&#10003;</span> banana
-    </li>
-    <li>
-      <span *ngIf="data.newmails === '324'">&#10003;</span> da
-    </li>
-    <li>
-      <span *ngIf="data.newmails === 'da'">&#10003;</span> harta
-    </li>
-  </ul> -->
+
   <mat-form-field class="field">
         <!-- <input matInput [(ngModel)]="data.mails"> -->
         <!-- [class.bad]="!good" [class.good]="good" -->
@@ -25,6 +15,6 @@
 <div mat-dialog-actions class="bot">
     <!-- <button mat-button (click)="onNoClick()">nvm</button> -->
     <button mat-button mat-dialog-close>back</button>
-    <span class="example-spacer"></span>
+    <span class="spacer"></span>
     <button mat-button [mat-dialog-close]="data" [disabled]="!good">Ok</button>
 </div>

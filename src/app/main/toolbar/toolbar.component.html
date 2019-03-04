@@ -1,0 +1,16 @@
+<mat-menu #appMenu="matMenu">
+  <button mat-menu-item (click)="toggleTheme()"> Switch theme </button>
+  <button mat-menu-item (click)="help()"> Help </button>
+  <button mat-menu-item (click)="logout()"> Logout </button>
+</mat-menu>
+
+
+
+
+<mat-toolbar color="primary">
+  <img [src]=pic class="logo">
+  <span>Alerting Service</span>  
+  <span class="spacer"></span>
+  <p> buggy alpha</p>
+  <button mat-button [matMenuTriggerFor]="appMenu"><mat-icon>settings</mat-icon></button>
+</mat-toolbar>

@@ -1,17 +1,13 @@
 <!-- [@slideInOut] -->
 <div class="all">
-  <p class="title" *ngIf="animation"> Servers list: </p>
+  <!-- <p class="title"> Servers list: </p> -->
+  <page-title title="Servers list:"></page-title>
 
   <mat-card class="mat-elevation-z8 centered filters" color="primary">
-    <!-- <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
-    </mat-form-field> -->
-    <!-- [(ngModel)]="crap" [checked]="false" -->
-    <!-- <mat-checkbox *ngFor="let filter of filters" style="margin-right: 10px;" (change)="checkBoxClick(filter,$event.checked)" color="warn">{{filter}}</mat-checkbox> -->
     <mat-checkbox *ngFor="let item of checklist" [(ngModel)]="item.isSelected" style="margin-right: 10px;" (change)="checkBoxClick(item.value,$event.checked)" color="warn">{{item.value}}</mat-checkbox>
   </mat-card>
   <br>
-  <div class="mat-elevation-z8 centered" *ngIf="animation">
+  <div class="mat-elevation-z8 centered">
     <table mat-table [dataSource]="dataSource" matSort>
         
         <ng-container matColumnDef="group">
@@ -56,13 +52,6 @@
         </tbody>
       </table>
       <mat-paginator [pageSizeOptions]="[10, 5, 3]" showFirstLastButtons></mat-paginator>
-      <!-- <mat-toolbar class="pagtool" color="accent"> -->
-        <!-- <mat-toolbar-row> -->
-        <!--   <mat-icon (click)="updateTable()" title="refresh">refresh</mat-icon>
-            <span class="example-spacer"></span>
-          <mat-paginator [pageSizeOptions]="[10, 5, 3]" showFirstLastButtons></mat-paginator>-->
-        <!-- </mat-toolbar-row> -->
-      <!-- </mat-toolbar> -->
       <button mat-icon-button style="position: absolute; bottom:10px; left:10px;" color="primary"><mat-icon (click)="updateTable()" title="refresh" class="refreshbtn">refresh</mat-icon></button>
       <mat-form-field style="position: absolute; bottom:-15px; left:80px;">
           <input matInput (keyup)="search($event.target.value)" [disabled]="searchdisabled" placeholder="Search">
@@ -70,8 +59,5 @@
   </div>
   <p class="text-danger middle" *ngIf="errormsg">{{errormsg}}</p>
 
-  <mat-spinner class="mid" color="warn" *ngIf="loading"></mat-spinner>
-    <!-- <p *ngIf="newmails">
-        You chose: <i>{{newmails}}</i>
-    </p> -->
+  <mat-spinner class="mid" color="warn" *ngIf="isloading"></mat-spinner>
 </div>

@@ -1,11 +1,7 @@
 
 <div class="loginbox">
-    <!-- <div class="aboveform">
-      <img src="../../assets/images/alertpng.png" class="avatar">
-      <p class="title">Hello</p> -->
       <div class="aboveform">
           <p class="title">Hello</p>
-          <!-- <img src="../../assets/images/alertpng.png" class="avatar"> -->
       </div>
     
     <form class="myform" #f="ngForm">
@@ -22,8 +18,7 @@
             <input matInput placeholder="Password" id="pass" class="field" [(ngModel)]="password" type="password" name="password" (input)="inputChanged($event)" required>
           </mat-form-field></td>
         </tr></table>
-        <button mat-raised-button (click)="login()" color="primary" class="btn" [disabled]="!f.valid">Login</button>
+        <button mat-raised-button (click)="login()" color="primary" class="submitButton" [disabled]="!f.valid">Login</button>
         <p class="err" *ngIf="err">{{err}}</p>
-        <!-- [@slideInOut]="err" -->
       </form>
   </div>

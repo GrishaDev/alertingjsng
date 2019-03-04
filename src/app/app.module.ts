@@ -15,7 +15,7 @@ import {Routes,RouterModule, Router} from '@angular/router'
 import { AppComponent } from './app.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ServersComponent } from './servers/servers.component';
-// import { Field } from './servers/servers.component';
+
 import { ServerdialogComponent } from './servers/serverdialog/serverdialog.component';
 import { SettingdialogComponent } from './settings/settingdialog/settingdialog.component';
 import { LoginComponent } from './login/login.component';
@@ -25,7 +25,9 @@ import { OverlayModule} from '@angular/cdk/overlay';
 import { TestingareaComponent } from './testingarea/testingarea.component';
 import { HomeComponent } from './home/home.component';
 import { GroupdialogComponent } from './servers/groupdialog/groupdialog.component';
-import { TestComponent } from './main/test/test.component';
+import { ToolbarComponent } from './main/toolbar/toolbar.component';
+import { TitleComponent } from './title/title.component';
+
 
 const appRoutes: Routes =
 [
@@ -45,7 +47,8 @@ const appRoutes: Routes =
     TestingareaComponent,
     HomeComponent,
     GroupdialogComponent,
-    TestComponent
+    ToolbarComponent,
+    TitleComponent
   ],
   imports: [
     FormsModule,

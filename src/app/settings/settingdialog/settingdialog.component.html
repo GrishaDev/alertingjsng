@@ -1,26 +1,13 @@
 <h1 mat-dialog-title class="middle">Change value of {{data.setting}}</h1>
 <div mat-dialog-content class="middle">
-  <!-- type now -->
-  <!-- <ul>
-    <li>
-      <span *ngIf="data.newmails === 'da'">&#10003;</span> banana
-    </li>
-    <li>
-      <span *ngIf="data.newmails === '324'">&#10003;</span> da
-    </li>
-    <li>
-      <span *ngIf="data.newmails === 'da'">&#10003;</span> harta
-    </li>
-  </ul> -->
   <mat-form-field class="field">
         <!-- <input matInput [(ngModel)]="data.mails"> -->
         <textarea matInput placeholder="Type:" [(ngModel)]="data.value">{{data.value}}</textarea>
-        <!-- <mat-hint align="start"><strong>Don't disclose personal info</strong> </mat-hint> -->
   </mat-form-field>
 </div>
 <div mat-dialog-actions class="bot">
     <!-- <button mat-button (click)="onNoClick()">nvm</button> -->
     <button mat-button mat-dialog-close>back</button>
-    <span class="example-spacer"></span>
+    <span class="spacer"></span>
     <button mat-button [mat-dialog-close]="data">Ok</button>
 </div>

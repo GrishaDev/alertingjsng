@@ -21,16 +21,15 @@ export class HomeComponent implements OnInit {
   errormsg:string ="";
   index:number;
 
-  onView()
-  {
-    console.log("viewing Home tab");
-    this.updateData();
-  }
+  // onView()
+  // {
+  //   console.log("viewing Home tab");
+  //   this.updateData();
+  // }
 
-  receiveMessage($event) {
-    // this.message = $event
-    console.log($event);
-  }
+  // receiveMessage($event) {
+  //   console.log($event);
+  // }
 
   wakeup()
   {
@@ -43,17 +42,12 @@ export class HomeComponent implements OnInit {
     this.updateData();
   }
 
-  // newMessage() {
-  //   this.shared.changeMessage("Hello from Sibling")
-  // }
 
   updateData()
   {
     this.homeapi.getCount().subscribe((data:any) =>
     {
       console.log(data);
-      // var x:number = (data.minutes)/60
-      // this.hours = Number(x.toFixed(2));
       var datka:number = data.minutes;
       this.hours = Math.floor(datka/60);
       datka = datka - (this.hours * 60);
@@ -70,19 +64,4 @@ export class HomeComponent implements OnInit {
     (err) => {console.log("Error contacting home service, server down? details: "+JSON.stringify(err));
     this.errormsg="Error getting data from database, try again soon."});
   }
-
-  // ngAfterViewChecked() {
-  //   console.log("hello user view home again");
-  // }
-
-  // ngAfterContentChecked()
-  // {
-  //   console.log("hello user view home again");
-  // }
-
-  // ngAfterContentInit()
-  // {
-  //   console.log("hello user view home again");
-  // }
-
 }

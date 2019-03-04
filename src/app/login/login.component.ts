@@ -28,20 +28,14 @@ export class LoginComponent implements OnInit
   constructor(private router: Router,private http:HttpClient,private loginservice:LoginService) { }
   username: string;
   password: string;
-  valid:boolean = false;
+  isvalid:boolean = false;
   err:string;
 
     ngOnInit() {
-      console.log(this.valid)
+      console.log(this.isvalid)
     }
     login() : void 
     {
-      // if(this.username == 'admin' && this.password == 'admin'){
-      // this.router.navigate(["main"]);
-      // }else {
-      //   alert("Invalid credentials");
-      // }
-
       let it = this;
 
       const req = this.http.post('/api/loginsubmit', {
@@ -53,15 +47,12 @@ export class LoginComponent implements OnInit
         {
           console.log(res);
   
-         // var user = JSON.parse(res.user);
           if(res.auth)
           {
-            //alert("Connecting..");
             it.router.navigate(["main"]);
           }
           else
           {
-            //alert("Invalid credentials");
             it.err = "Invalid credentials";
           }
         },

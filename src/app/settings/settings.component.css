@@ -1,26 +1,16 @@
-.all
-{
-    height: 100%;
+table {
     width: 100%;
-    margin: 0;
 }
 
-table {
-    /* position: relative; */
-    width: 100%;
-    /* left: 10%; */
-  }
-
-  .centered {
+.centered {
     position: relative;
     width: 80%;
     left: 10%;
-  }
+}
 
 .title
 {
     position: relative;
-    /* color: darkgreen; */
     font-size: 2em;
     text-align: center;
 }
