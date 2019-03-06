@@ -19,27 +19,28 @@ export interface Server {
   server: string,
   cpu: number,
   ram: number,
+  disk: number,
   overloaded: boolean,
   mail: string;
 }
 
 let SERVER_DATA: Server[] = [
-  {id: 0,group:"group1",server: 'harta', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,"+
+  {id: 0,group:"group1",server: 'harta', cpu: 92,ram:52,disk: 10,overloaded:true,mail:"dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,"+
   "dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com,dada@gmail.com,pringles@hey.com"},
-  {id: 1,group:"group1",server: 'harta2', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
-  {id: 2,group:"group1",server: 'harta3', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
-  {id: 3,group:"group1",server: 'harta324', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
-  {id: 4,group:"group1",server: 'harta211', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
-  {id: 5,group:"group1",server: 'harta324', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
-  {id: 6,group:"group1",server: 'harta342', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
-  {id: 7,group:"group1",server: 'harta234', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
-  {id: 8,group:"group1",server: 'harta337', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
-  {id: 9,group:"group1",server: 'harta', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
-  {id: 10,group:"group1",server: 'harta777', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
-  {id: 11,group:"group1",server: 'harta3', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
-  {id: 12,group:"group1",server: 'harta324', cpu: 92,ram:52,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
-  {id: 13,group:"group1",server: 'harta555', cpu: 22,ram:12,overloaded:false,mail:"pringles@hey.com"},
-  {id: 14,group:"group1",server: 'harta322', cpu: 62,ram:42,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"}
+  {id: 1,group:"group1",server: 'harta2', cpu: 22,ram:12,disk: 10,overloaded:false,mail:"pringles@hey.com"},
+  {id: 2,group:"group1",server: 'harta3', cpu: 62,ram:42,disk: 10,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
+  {id: 3,group:"group1",server: 'harta324', cpu: 92,ram:52,disk: 10,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
+  {id: 4,group:"group1",server: 'harta211', cpu: 22,ram:12,disk: 10,overloaded:false,mail:"pringles@hey.com"},
+  {id: 5,group:"group1",server: 'harta324', cpu: 62,ram:42,disk: 10,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
+  {id: 6,group:"group1",server: 'harta342', cpu: 92,ram:52,disk: 10,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
+  {id: 7,group:"group1",server: 'harta234', cpu: 22,ram:12,disk: 10,overloaded:false,mail:"pringles@hey.com"},
+  {id: 8,group:"group1",server: 'harta337', cpu: 62,ram:42,disk: 10,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
+  {id: 9,group:"group1",server: 'harta', cpu: 92,ram:52,disk: 10,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
+  {id: 10,group:"group1",server: 'harta777', cpu: 22,ram:12,disk: 10,overloaded:false,mail:"pringles@hey.com"},
+  {id: 11,group:"group1",server: 'harta3', cpu: 62,ram:42,disk: 10,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"},
+  {id: 12,group:"group1",server: 'harta324', cpu: 92,ram:52,disk: 10,overloaded:true,mail:"dada@gmail.com,pringles@hey.com"},
+  {id: 13,group:"group1",server: 'harta555', cpu: 22,ram:12,disk: 10,overloaded:false,mail:"pringles@hey.com"},
+  {id: 14,group:"group1",server: 'harta322', cpu: 62,ram:42,disk: 10,overloaded:false,mail:"banan@outlook.com,jaja@bueno.nz"}
 ];
 
 @Component({
@@ -62,7 +63,7 @@ let SERVER_DATA: Server[] = [
 @Injectable()
 export class ServersComponent implements OnInit 
 {
-  displayedColumns: string[] = ['group','server', 'cpu','ram','overloaded','mail'];
+  displayedColumns: string[] = ['group','server', 'cpu','ram','disk','overloaded','mail'];
 
   checklist = [];
   grouplist:string [] = [];
@@ -99,10 +100,10 @@ export class ServersComponent implements OnInit
     
     //comment this pls before build, client side testing
 
-    // this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
-    // setTimeout(() => {this.dataSource.paginator = this.paginator; this.dataSource.sort = this.sort;});
-    // this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
-    // this.makeFilters();
+    this.dataSource  = new MatTableDataSource<Server>(SERVER_DATA);
+    setTimeout(() => {this.dataSource.paginator = this.paginator; this.dataSource.sort = this.sort;});
+    this.grouplist = ['proservers','damoy','hamami','useless','amazing'];
+    this.makeFilters();
     // ------------------------------
 
     this.updateTable();
